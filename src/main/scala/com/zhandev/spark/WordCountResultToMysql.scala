@@ -6,13 +6,13 @@ import org.apache.spark.SparkConf
 import org.apache.spark.streaming.{Seconds, StreamingContext}
 
 /**
-  * Spark Streaming processes socket data and save the wordcount result into MysQL
+  * Spark Streaming processes socket data and save the wordcount result into MySQL
   */
-object ForeachRDDApp {
+object WordCountResultToMysql {
 
   def main(args: Array[String]): Unit = {
 
-    val sparkConf = new SparkConf().setAppName("ForeachRDDApp").setMaster("local[2]")
+    val sparkConf = new SparkConf().setAppName("WordCountResultToMysql").setMaster("local[2]")
     val ssc = new StreamingContext(sparkConf, Seconds(5))
 
     val lines = ssc.socketTextStream("localhost", 6789)

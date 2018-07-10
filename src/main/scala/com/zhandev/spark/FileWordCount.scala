@@ -10,7 +10,7 @@ object FileWordCount {
 
   def main(args: Array[String]): Unit = {
 
-    // can use "local" here as there is no receiver for processing file system data
+    // can use "local" here as there is no receiver for processing file system data, but it is not recommended
     val sparkConf = new SparkConf().setMaster("local").setAppName("FileWordCount")
     val ssc = new StreamingContext(sparkConf, Seconds(5))
 

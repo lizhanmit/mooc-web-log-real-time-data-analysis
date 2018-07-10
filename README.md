@@ -65,7 +65,7 @@ Steps:
 
 Spark Streaming processes socket data with state and does word count. The count will be accumulated based on previous result.
 
-**Note:** If you use stateful operation，you must set checkpoint. In real project, you should set checkpoint directory on HDFS.
+**Note:** If you use stateful operation，you must set checkpoint. In real projects, you should set checkpoint directory on HDFS.
 
 Steps:
 
@@ -91,7 +91,7 @@ Steps:
 
 ### ForeachRDDApp.scala
 
-Spark Streaming processes socket data and save the wordcount result into MysQL.
+Spark Streaming processes socket data and save the wordcount result into MySQL.
 
 **Note:** Remember to add MySql Maven dependency in pom.xml file.
 
@@ -121,3 +121,29 @@ Steps:
 ```
 
 ![spark-streaming-save-wordcount-result-into-mysql.png](src/main/resources/static/img/spark-streaming-save-wordcount-result-into-mysql.png)
+
+### BlacklistFiltering.scala
+
+Use Spark Streaming to filter blacklist.
+
+Steps:
+
+1. In terminal A, `nc -lk 6789`.
+2. In IDEA, run BlacklistFiltering.scala.
+3. In terminal A, type
+
+```
+20180101,zs
+20180101,ls
+20180101,ww
+20180101,zl
+```
+
+4. In IDEA console, you will see the records with "zs" and "ls" have been filtered out.
+
+```
+20180101,ww
+20180101,zl
+```
+
+![blacklist-filtering-idea.png](src/main/resources/static/img/blacklist-filtering-idea.png)
