@@ -1,6 +1,6 @@
 # Spark Streaming Real Project Tutorial
 
-## src/main/java/com.zhandev.spark.kafka
+## src/main/java/com/zhandev/spark/kafka
 
 KafkaProducer.java produces messages and KafkaConsumer.java consumes messages.
 
@@ -21,11 +21,11 @@ receive: message_2
 
 ---
 
-## src/main/scala/com.zhandev.spark
+## src/main/scala/com/zhandev/spark
 
 ### NetworkWordCount.scala
 
-Spark Streaming receives socket data and does word counting.
+Spark Streaming receives socket data and does word count.
 
 Steps:
 
@@ -40,6 +40,26 @@ Steps:
 (c,2)
 ```
 
-**Note:** There might be "NoSuchMethodError" exception. Just add corresponding maven dependencies to solve the problem.
+**Note:** There might be "NoSuchMethodError" exceptions. Just add corresponding Maven dependencies to solve the problem.
 
 ![spark-streaming-processes-socket-data-architecture.png](src/main/resources/static/img/spark-streaming-processes-socket-data-architecture.png)
+
+### FileWordCount.scala
+
+Spark Streaming processes file system (local/hdfs) data and does word count.
+
+Steps:
+
+1. In IDEA, run NetworkWordCount.scala.
+2. Type `a a a b b c` in file1.log file. Save.
+3. Copy file1.log file to `/home/hadoop/IdeaProjects/sparktrain/src/main/resources/static/file`.
+4. In IDEA console, you should see
+
+```
+(a,3)
+(b,2)
+(c,1)
+```
+
+---
+
