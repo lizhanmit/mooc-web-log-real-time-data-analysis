@@ -9,7 +9,7 @@ Steps:
 1. In terminal A, start ZooKeeper. Under `zookeeper/bin`, command line: `zkServer.sh start`.
 2. In terminal B, start Kafka. Under `kafka_2.11-0.9.0.0`, command line: `bin/kafka-server-start.sh config/server.properties`.
 3. In IDEA, run KafkaClientApp.java.
-4. In IDEA console, you should see
+4. In IDEA console, you will see
 
 ```
 Sent: message_1
@@ -32,7 +32,7 @@ Steps:
 1. In terminal A, `nc -lk 6789`.
 2. In IDEA, run NetworkWordCount.scala.
 3. In terminal A, type `a a a b b b b c c`.
-4. In IDEA console, you should see
+4. In IDEA console, you will see
 
 ```
 (b,4)
@@ -53,7 +53,7 @@ Steps:
 1. In IDEA, run NetworkWordCount.scala.
 2. Type `a a a b b c` in file1.log file. Save.
 3. Copy file1.log file to `/home/hadoop/IdeaProjects/sparktrain/src/main/resources/static/file`.
-4. In IDEA console, you should see
+4. In IDEA console, you will see
 
 ```
 (a,3)
@@ -61,5 +61,63 @@ Steps:
 (c,1)
 ```
 
----
+### StatefulWordCount.scala
 
+Spark Streaming processes socket data with state and does word count. The count will be accumulated based on previous result.
+
+**Note:** If you use stateful operation，you must set checkpoint. In real project, you should set checkpoint directory on HDFS.
+
+Steps:
+
+1. In terminal A, `nc -lk 6789`.
+2. In IDEA, run StatefulWordCount.scala.
+3. In terminal A, type `a a a b b b b c c`.
+4. In IDEA console, you will see
+
+```
+(b,4)
+(a,3)
+(c,2)
+```
+
+5. In terminal A, type `a a b c c c`.
+6. In IDEA console, you will see
+
+```
+(b,5)
+(a,5)
+(c,5)
+```
+
+### ForeachRDDApp.scala
+
+Spark Streaming processes socket data and save the wordcount result into MysQL.
+
+**Note:** Remember to add MySql Maven dependency in pom.xml file.
+
+Steps:
+
+1. In terminal A, start MySQL, `mysql -u root -p`. Enter password.
+2. Create a database, `create database spark;`.
+3. Use this database, `use spark`.
+4. Create a table, `create table wordcount (word varchar(50) default null, count int(10) default null);`.
+5. In terminal B, `nc -lk 6789`.
+6. In IDEA, run ForeachRDDApp.scala.
+7. In terminal B, type `a a b c c c`.
+8. In IDEA console, you will see
+
+```
+(b,1)
+(a,2)
+(c,3)
+```
+
+9. In terminal A, `select * from wordcount`. You will see
+
+```
+| b | 1 |
+| a | 2 |
+| c | 3 |
+```
+
+![spark-streaming-save-wordcount-result-into-mysql.png](src/main/resources/static/img/spark-streaming-save-wordcount-result-into-mysql.png)

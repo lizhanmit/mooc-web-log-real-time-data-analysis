@@ -4,7 +4,7 @@ import org.apache.spark.SparkConf
 import org.apache.spark.streaming.{Seconds, StreamingContext}
 
 /**
-  * Spark Streaming processes socket data
+  * Spark Streaming processes socket data (wordcount)
   *
   * Testing: nc -lk 6789
   */
