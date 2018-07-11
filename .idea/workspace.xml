@@ -13,20 +13,50 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="README.md" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/README.md">
+      <file leaf-file-name="pom.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/pom.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="156">
-              <caret line="141" column="86" selection-start-line="141" selection-start-column="86" selection-end-line="141" selection-end-column="86" />
+            <state relative-caret-position="204">
+              <caret line="63" selection-start-line="63" selection-end-line="63" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="BlacklistFiltering.scala" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/scala/com/zhandev/spark/BlacklistFiltering.scala">
+      <file leaf-file-name="README.md" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/README.md">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="162">
+              <caret line="234" column="16" lean-forward="true" selection-start-line="234" selection-start-column="16" selection-end-line="234" selection-end-column="16" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="SparkSqlNetworkWordCount.scala" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/scala/com/zhandev/spark/SparkSqlNetworkWordCount.scala">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="170">
+              <caret line="10" column="31" selection-start-line="10" selection-start-column="7" selection-end-line="10" selection-end-column="31" />
+              <folding>
+                <element signature="e#27#60#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="flume-push-streaming.conf" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/resources/static/flume/flume-push-streaming.conf">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="249">
+              <caret line="15" selection-start-line="15" selection-end-line="15" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="FlumePushWordCount.scala" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/scala/com/zhandev/spark/FlumePushWordCount.scala">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="102">
-              <caret line="6" column="43" lean-forward="true" selection-start-line="6" selection-start-column="4" selection-end-line="6" selection-end-column="43" />
+              <caret line="6" column="25" selection-start-line="6" selection-start-column="7" selection-end-line="6" selection-end-column="25" />
               <folding>
                 <element signature="e#27#60#0" expanded="true" />
               </folding>
@@ -47,6 +77,8 @@
     <findStrings>
       <find>real</find>
       <find>ww</find>
+      <find>word</find>
+      <find>total</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -62,10 +94,13 @@
         <option value="$PROJECT_DIR$/src/main/scala/com/zhandev/spark/scriptFile.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/com/zhandev/spark/StatefulWordCount.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/com/zhandev/spark/NetworkWordCount.scala" />
-        <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/src/main/scala/com/zhandev/spark/ForeachRDDApp.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/com/zhandev/spark/FileWordCount.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/com/zhandev/spark/BlacklistFiltering.scala" />
+        <option value="$PROJECT_DIR$/src/main/scala/com/zhandev/spark/SparkSqlNetworkWordCount.scala" />
+        <option value="$PROJECT_DIR$/src/main/resources/static/flume/flume-push-streaming.conf" />
+        <option value="$PROJECT_DIR$/src/main/scala/com/zhandev/spark/FlumePushWordCount.scala" />
+        <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/README.md" />
       </list>
     </option>
@@ -104,8 +139,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="AndroidView" />
       <pane id="Scope" />
+      <pane id="AndroidView" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -146,6 +181,15 @@
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="resources" type="462c0819:PsiDirectoryNode" />
               <item name="static" type="462c0819:PsiDirectoryNode" />
+              <item name="flume" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="sparktrain" type="b2602c69:ProjectViewProjectNode" />
+              <item name="sparktrain" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
+              <item name="static" type="462c0819:PsiDirectoryNode" />
               <item name="img" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -163,6 +207,11 @@
               <item name="scala" type="462c0819:PsiDirectoryNode" />
               <item name="spark" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="sparktrain" type="b2602c69:ProjectViewProjectNode" />
+              <item name="sparktrain" type="462c0819:PsiDirectoryNode" />
+              <item name="target" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
@@ -174,6 +223,11 @@
     <property name="project.structure.last.edited" value="Global Libraries" />
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.2" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/main/resources/static" />
+    </key>
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -187,7 +241,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.BlacklistFiltering">
+  <component name="RunManager" selected="Application.FlumePushWordCount">
     <configuration name="BlacklistFiltering" type="Application" factoryName="Application" temporary="true">
       <option name="MAIN_CLASS_NAME" value="com.zhandev.spark.BlacklistFiltering" />
       <module name="sparktrain" />
@@ -199,10 +253,11 @@
         </pattern>
       </extension>
     </configuration>
-    <configuration name="FileWordCount" type="Application" factoryName="Application" temporary="true">
-      <option name="MAIN_CLASS_NAME" value="com.zhandev.spark.FileWordCount" />
+    <configuration name="FlumePushWordCount" type="Application" factoryName="Application" temporary="true">
+      <option name="MAIN_CLASS_NAME" value="com.zhandev.spark.FlumePushWordCount" />
       <module name="sparktrain" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="PROGRAM_PARAMETERS" value="10.0.2.15 41414" />
+      <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="com.zhandev.spark.*" />
@@ -221,8 +276,8 @@
         </pattern>
       </extension>
     </configuration>
-    <configuration name="StatefulWordCount" type="Application" factoryName="Application" temporary="true">
-      <option name="MAIN_CLASS_NAME" value="com.zhandev.spark.StatefulWordCount" />
+    <configuration name="SparkSqlNetworkWordCount" type="Application" factoryName="Application" temporary="true">
+      <option name="MAIN_CLASS_NAME" value="com.zhandev.spark.SparkSqlNetworkWordCount" />
       <module name="sparktrain" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <extension name="coverage">
@@ -285,19 +340,19 @@
       <listeners />
     </configuration>
     <list>
-      <item itemvalue="Application.FileWordCount" />
-      <item itemvalue="Application.StatefulWordCount" />
       <item itemvalue="Application.ForeachRDDApp" />
       <item itemvalue="Application.WordCountResultToMysql" />
       <item itemvalue="Application.BlacklistFiltering" />
+      <item itemvalue="Application.SparkSqlNetworkWordCount" />
+      <item itemvalue="Application.FlumePushWordCount" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.FlumePushWordCount" />
+        <item itemvalue="Application.SparkSqlNetworkWordCount" />
         <item itemvalue="Application.BlacklistFiltering" />
         <item itemvalue="Application.WordCountResultToMysql" />
         <item itemvalue="Application.ForeachRDDApp" />
-        <item itemvalue="Application.StatefulWordCount" />
-        <item itemvalue="Application.FileWordCount" />
       </list>
     </recent_temporary>
   </component>
@@ -320,30 +375,30 @@
     <layout>
       <window_info anchor="right" id="Palette" order="3" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Messages" order="7" weight="0.25581396" />
       <window_info anchor="right" id="Palette&#9;" order="3" />
       <window_info id="Image Layers" order="2" />
       <window_info anchor="right" id="Capture Analysis" order="3" />
       <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
-      <window_info anchor="right" id="Maven Projects" order="3" weight="0.32895753" />
+      <window_info anchor="right" id="Maven Projects" order="3" visible="true" weight="0.17837837" />
       <window_info anchor="bottom" id="Version Control" order="7" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.28801432" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.2844365" />
       <window_info anchor="bottom" id="Terminal" order="7" />
       <window_info id="Capture Tool" order="2" />
       <window_info id="Designer" order="2" />
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.24247104" />
-      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" visible="true" weight="0.24942085" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24247104" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info id="UI Designer" order="2" />
       <window_info anchor="right" id="Theme Preview" order="3" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" visible="true" weight="0.24942085" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Find" order="1" />
+      <window_info anchor="bottom" id="Messages" order="7" weight="0.25581396" />
     </layout>
   </component>
   <component name="VcsContentAnnotationSettings">
@@ -355,34 +410,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="jar://$MAVEN_REPOSITORY$/org/apache/kafka/kafka_2.11/0.9.0.0/kafka_2.11-0.9.0.0-sources.jar!/kafka/message/MessageAndMetadata.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="527">
-          <caret line="31" column="6" selection-start-line="31" selection-start-column="6" selection-end-line="31" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/apache/kafka/kafka_2.11/0.9.0.0/kafka_2.11-0.9.0.0-sources.jar!/kafka/consumer/ConsumerIterator.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="748">
-          <caret line="44" column="30" selection-start-line="44" selection-start-column="30" selection-end-line="44" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/apache/kafka/kafka_2.11/0.9.0.0/kafka_2.11-0.9.0.0-sources.jar!/kafka/consumer/KafkaStream.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="629">
-          <caret line="37" column="39" selection-start-line="37" selection-start-column="18" selection-end-line="37" selection-end-column="39" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/apache/kafka/kafka_2.11/0.9.0.0/kafka_2.11-0.9.0.0-sources.jar!/kafka/javaapi/consumer/ConsumerConnector.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="731">
-          <caret line="43" column="55" selection-start-line="43" selection-start-column="9" selection-end-line="43" selection-end-column="55" />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$MAVEN_REPOSITORY$/org/apache/kafka/kafka_2.11/0.9.0.0/kafka_2.11-0.9.0.0-sources.jar!/kafka/consumer/ConsumerConfig.scala">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1683">
@@ -471,9 +498,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="272">
           <caret line="27" column="59" selection-start-line="27" selection-start-column="59" selection-end-line="27" selection-end-column="59" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -599,9 +623,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/com/zhandev/spark/scriptFile.scala">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/com/zhandev/spark/scriptFile.scala" />
     <entry file="file://$PROJECT_DIR$/src/main/java/com/zhandev/spark/kafka/KafkaProperties.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="187">
@@ -613,9 +635,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-156">
           <caret line="16" column="26" selection-start-line="16" selection-start-column="13" selection-end-line="16" selection-end-column="26" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -637,9 +656,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="272">
           <caret line="16" column="40" lean-forward="true" selection-start-line="16" selection-start-column="40" selection-end-line="16" selection-end-column="40" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -647,23 +663,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="238">
           <caret line="14" lean-forward="true" selection-start-line="14" selection-end-line="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pom.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="206">
-          <caret line="63" selection-start-line="63" selection-end-line="63" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/com/zhandev/spark/NetworkWordCount.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="6" column="52" selection-start-line="6" selection-start-column="52" selection-end-line="6" selection-end-column="52" />
-          <folding>
-            <element signature="e#27#60#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -689,8 +688,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/scala/com/zhandev/spark/BlacklistFiltering.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="6" column="43" lean-forward="true" selection-start-line="6" selection-start-column="4" selection-end-line="6" selection-end-column="43" />
+        <state relative-caret-position="119">
+          <caret line="7" column="4" selection-start-line="7" selection-start-column="4" selection-end-line="7" selection-end-column="4" />
           <folding>
             <element signature="e#27#60#0" expanded="true" />
           </folding>
@@ -707,10 +706,61 @@
         </state>
       </provider>
     </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/apache/spark/spark-streaming_2.11/2.3.0/spark-streaming_2.11-2.3.0.jar!/org/apache/spark/streaming/StreamingContext.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="176">
+          <caret line="30" column="6" selection-start-line="30" selection-start-column="6" selection-end-line="30" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/com/zhandev/spark/NetworkWordCount.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="232">
+          <caret line="19" column="29" selection-start-line="19" selection-start-column="29" selection-end-line="19" selection-end-column="29" />
+          <folding>
+            <element signature="e#27#60#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="63" selection-start-line="63" selection-end-line="63" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/static/flume/flume-push-streaming.conf">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="249">
+          <caret line="15" selection-start-line="15" selection-end-line="15" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="156">
-          <caret line="141" column="86" selection-start-line="141" selection-start-column="86" selection-end-line="141" selection-end-column="86" />
+        <state relative-caret-position="162">
+          <caret line="234" column="16" lean-forward="true" selection-start-line="234" selection-start-column="16" selection-end-line="234" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/com/zhandev/spark/SparkSqlNetworkWordCount.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="10" column="31" selection-start-line="10" selection-start-column="7" selection-end-line="10" selection-end-column="31" />
+          <folding>
+            <element signature="e#27#60#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/com/zhandev/spark/FlumePushWordCount.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="6" column="25" selection-start-line="6" selection-start-column="7" selection-end-line="6" selection-end-column="25" />
+          <folding>
+            <element signature="e#27#60#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
