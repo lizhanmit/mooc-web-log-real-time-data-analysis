@@ -157,7 +157,7 @@ Steps:
 
 ![blacklist-filtering-idea.png](src/main/resources/static/img/blacklist-filtering-idea.png)
 
-### SparkSqlNetworkWordCount
+### SparkSqlNetworkWordCount.scala
 
 Integrate Spark Streaming and Spark SQL to process socket data and do word count. Convert RDDs of the words DStream to DataFrame and run SQL query.
 
@@ -180,7 +180,7 @@ Steps:
 +----+-----+
 ```
 
-### FlumePushWordCount
+### FlumePushWordCount.scala
 
 Integrate Spark Streaming and Flume to process socket data and do word count in push-based approach.
 
@@ -217,7 +217,7 @@ flume-ng agent \
 
 Steps:
 
-1. In terminal A, pack the project using maven, under the project directory, `mvn clean package -DskipTests` (skip test). Then the .jar file will be created under "target" folder.
+1. In terminal A, pack the spark project using maven, under the spark project directory, `mvn clean package -DskipTests` (skip test). Then the .jar file will be created under "target" folder.
 2. In terminal B, run the .jar file using spark-submit. (need network to download packages)
 
 ```
@@ -246,3 +246,79 @@ flume-ng agent \
 (a,2)
 (b,2)
 ```
+
+### FlumePullWordCount.scala
+
+Integrate Spark Streaming and Flume to process socket data and do word count in pull-based approach. Pull-based approach is better than push-based approach. Use pull-based one in real projects.
+
+**Note:**
+
+- Remember to add spark-streaming-flume-sink, scala-library, and commons-lang3 Maven dependencies in pom.xml file.
+- There are a bit differences between the flume config file and FlumePushWordCount file of local mode and server mode (in real projects).
+- Start Flume first, then start Spark Streaming.
+- Remember to add spark-streaming-flume-sink_2.11-2.3.0.jar, scala-library-2.11.8.jar and commons-lang3-3.5.jar under flume/lib directory. Otherwise, you will get the following error.
+- Pay attention to the version of .jar files.
+
+```
+org.apache.flume.FlumeException: Unable to load sink type: org.apache.spark.streaming.flume.sink.SparkSink, class: org.apache.spark.streaming.flume.sink.SparkSink
+        at org.apache.flume.sink.DefaultSinkFactory.getClass(DefaultSinkFactory.java:71)
+        at org.apache.flume.sink.DefaultSinkFactory.create(DefaultSinkFactory.java:43)
+        at org.apache.flume.node.AbstractConfigurationProvider.loadSinks(AbstractConfigurationProvider.java:410)
+        at org.apache.flume.node.AbstractConfigurationProvider.getConfiguration(AbstractConfigurationProvider.java:98)
+        at org.apache.flume.node.PollingPropertiesFileConfigurationProvider$FileWatcherRunnable.run(PollingPropertiesFileConfigurationProvider.java:140)
+        at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:471)
+        at java.util.concurrent.FutureTask.runAndReset(FutureTask.java:304)
+        at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$301(ScheduledThreadPoolExecutor.java:178)
+        at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:293)
+        at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+        at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+        at java.lang.Thread.run(Thread.java:744)
+Caused by: java.lang.ClassNotFoundException: org.apache.spark.streaming.flume.sink.SparkSink
+        at java.net.URLClassLoader$1.run(URLClassLoader.java:366)
+        at java.net.URLClassLoader$1.run(URLClassLoader.java:355)
+        at java.security.AccessController.doPrivileged(Native Method)
+        at java.net.URLClassLoader.findClass(URLClassLoader.java:354)
+        at java.lang.ClassLoader.loadClass(ClassLoader.java:425)
+        at sun.misc.Launcher$AppClassLoader.loadClass(Launcher.java:308)
+        at java.lang.ClassLoader.loadClass(ClassLoader.java:358)
+        at java.lang.Class.forName0(Native Method)
+        at java.lang.Class.forName(Class.java:190)
+        at org.apache.flume.sink.DefaultSinkFactory.getClass(DefaultSinkFactory.java:69)
+        ... 11 more
+```
+
+#### server mode (in real projects)
+
+Steps:
+
+1. In terminal A, pack the spark project using maven, under the spark project directory, `mvn clean package -DskipTests` (skip test). Then the .jar file will be created under "target" folder.
+2. In terminal B, start Flume.
+
+```
+flume-ng agent \
+--name netcat-memory-spark \
+--conf $FLUME_HOME/conf \
+--conf-file /home/hadoop/IdeaProjects/sparktrain/src/main/resources/static/flume/flume-pull-streaming.conf \
+-Dflume.root.logger=INFO,console
+```
+
+3. In terminal C, `telnet localhost 44444`.
+4. In terminal D, run the .jar file using spark-submit. (need network to download packages)
+
+```
+spark-submit \
+--class com.zhandev.spark.FlumePullWordCount \
+--master local[2] \
+--packages org.apache.spark:spark-streaming-flume_2.11:2.3.0 \
+/home/hadoop/IdeaProjects/sparktrain/target/spark-train-1.0.jar \
+localhost 41414
+```
+
+5. In terminal C, type `a a b b`.
+6. In terminal D, you will see
+
+```
+(a,2)
+(b,2)
+```
+
