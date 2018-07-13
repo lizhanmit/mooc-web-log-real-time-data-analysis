@@ -382,7 +382,7 @@ Steps:
 2. Start Kafka. Under `kafka_2.11-0.9.0.0`, command line: `bin/kafka-server-start.sh -daemon config/server.properties`. (`-daemon` means Kafka will run in background.)
 3. Create a topic: `bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic kafka_streaming_topic`.
 4. Check the topic: `bin/kafka-topics.sh --list --zookeeper localhost:2181`. Then "kafka_streaming_topic" will be displayed.
-5. Test to make sure Kafka works well.
+5. Test in order to make sure Kafka works well.
     1. Produce messages: `bin/kafka-console-producer.sh --broker-list localhost:9092 --topic kafka_streaming_topic`.
     2. Consume messages: In terminal B, `bin/kafka-console-consumer.sh --zookeeper localhost:2181 --topic kafka_streaming_topic`.
     3. In terminal A, type `hello`.
@@ -421,4 +421,62 @@ localhost:9092 kafka_streaming_topic
 (b,2)
 ```
 
-###
+---
+
+## Log Streaming Workflow
+
+![log-streaming-workflow-architecture.png](src/main/resources/static/img/log-streaming-workflow-architecture.png)
+
+**Note:**
+
+- Remember to add flume-ng-log4jappender Maven dependency in pom.xml file. Otherwise, you will get `java.lang.ClassNotFoundException: org.apache.flume.clients.log4jappender.Log4jAppender`.
+
+Steps:
+
+1. Create LoggerGenerator to generate log info.
+2. Create log4j.properties to configure LoggerGenerator.
+3. Create Flume config file and start Flume.
+4. Start Zookeeper.
+5. Start Kafka. Create Kafka topic.
+6. Run LoggerGenerator.
+7. Create and run logStreamingApp.
+
+Detailed steps:
+
+1. Create LoggerGenerator.java file to simulate log generator.
+2. Create log4j.properties to configure LoggerGenerator.
+3. Create Flume config file `log-streaming.conf`.
+4. In terminal A, start Flume.
+
+```
+flume-ng agent \
+--name avro-memory-logger \
+--conf $FLUME_HOME/conf \
+--conf-file /home/hadoop/IdeaProjects/sparktrain/src/main/resources/static/flume/log-streaming.conf \
+-Dflume.root.logger=INFO,console
+```
+
+5. In IDEA, run LoggerGenerator.java. In terminal A, you will get log info.
+6. In new terminal B, start Zookeeper. Under `zookeeper/bin`, command line: `zkServer.sh start`.
+7. Start Kafka. Under `kafka_2.11-0.9.0.0`, command line: `bin/kafka-server-start.sh -daemon config/server.properties`. (`-daemon` means Kafka will run in background.)
+8. Create a topic: `bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic log_streaming_topic`.
+9. Check the topic: `bin/kafka-topics.sh --list --zookeeper localhost:2181`. Then "log_streaming_topic" will be displayed.
+10. Create Flume config file `log-streaming-2.conf`.
+11. In terminal A, use `jps` to check JVM processes, and then use `kill -9 <process number>` to kill `log-streaming.conf` Flume application.
+12. Start Flume (`log-streaming-2.conf`).
+
+```
+flume-ng agent \
+--name avro-memory-kafka \
+--conf $FLUME_HOME/conf \
+--conf-file /home/hadoop/IdeaProjects/sparktrain/src/main/resources/static/flume/log-streaming-2.conf \
+-Dflume.root.logger=INFO,console
+```
+
+13. Create a Kafka consumer. In terminal B, `bin/kafka-console-consumer.sh --zookeeper localhost:2181 --topic log_streaming_topic`.
+14. In IDEA, run LoggerGenerator.java. In terminal B, you will get log info.
+15. Create logStreamingApp.scala file. Run. Edit configurations -> Program arguments, input `10.0.2.15:9092 log_streaming_topic`. -> Apply
+16. In IDEA console, you will see the result.
+
+![log-streaming-operation-in-real-projects.png](src/main/resources/static/img/log-streaming-operation-in-real-projects.png)
+

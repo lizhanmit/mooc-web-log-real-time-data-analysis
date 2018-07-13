@@ -11,6 +11,7 @@
         <spark.version>2.3.0</spark.version>
         <hadoop.version>2.7.1</hadoop.version>
         <hbase.version>1.2.6</hbase.version>
+        <flume.version>1.7.0</flume.version>
     </properties>
 
     <dependencies>
@@ -104,6 +105,13 @@
             <artifactId>spark-streaming-kafka-0-8_2.11</artifactId>
             <version>${spark.version}</version>
         </dependency>
+
+        <dependency>
+            <groupId>org.apache.flume.flume-ng-clients</groupId>
+            <artifactId>flume-ng-log4jappender</artifactId>
+            <version>${flume.version}</version>
+        </dependency>
+
     </dependencies>
 
     <build>
