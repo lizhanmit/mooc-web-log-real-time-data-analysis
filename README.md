@@ -423,7 +423,9 @@ localhost:9092 kafka_streaming_topic
 
 ---
 
-## Log Streaming Workflow
+## Web Log Streaming Workflow
+
+Collect web log by using Flume, then send to Kafka, then process by using Spark Streaming.
 
 ![log-streaming-workflow-architecture.png](src/main/resources/static/img/log-streaming-workflow-architecture.png)
 
@@ -433,7 +435,7 @@ localhost:9092 kafka_streaming_topic
 
 Steps:
 
-1. Create LoggerGenerator to generate log info.
+1. Create LoggerGenerator to generate web log info.
 2. Create log4j.properties to configure LoggerGenerator.
 3. Create Flume config file and start Flume.
 4. Start Zookeeper.
@@ -443,7 +445,7 @@ Steps:
 
 Detailed steps:
 
-1. Create LoggerGenerator.java file to simulate log generator.
+1. Create LoggerGenerator.java file to simulate web log generator.
 2. Create log4j.properties to configure LoggerGenerator.
 3. Create Flume config file `log-streaming.conf`.
 4. In terminal A, start Flume.
@@ -479,4 +481,10 @@ flume-ng agent \
 16. In IDEA console, you will see the result.
 
 ![log-streaming-operation-in-real-projects.png](src/main/resources/static/img/log-streaming-operation-in-real-projects.png)
+
+---
+
+## Real Project
+
+Firstly, test functionality in local mode. Then test in server mode (in real projects) with performance tuning.
 
