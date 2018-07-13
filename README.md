@@ -98,7 +98,7 @@ Steps:
 (c,5)
 ```
 
-### ForeachRDDApp.scala
+### WordCountResultToMysql.scala
 
 Spark Streaming processes socket data and save the wordcount result into MySQL.
 
@@ -218,7 +218,7 @@ flume-ng agent \
 Steps:
 
 1. In terminal A, pack the spark project using maven, under the spark project directory, `mvn clean package -DskipTests` (skip test). Then the .jar file will be created under "target" folder.
-2. In terminal B, run the .jar file using spark-submit. (need network to download packages)
+2. In terminal B, run the .jar file using spark-submit. (Need network to download packages, but in real projects, network will not be available. So you should use `--jars` instead of `--packages`.)
 
 ```
 spark-submit \
@@ -256,7 +256,7 @@ Integrate Spark Streaming and Flume to process socket data and do word count in 
 - Remember to add spark-streaming-flume-sink, scala-library, and commons-lang3 Maven dependencies in pom.xml file.
 - There are a bit differences between the flume config file and FlumePushWordCount file of local mode and server mode (in real projects).
 - Start Flume first, then start Spark Streaming.
-- Remember to add spark-streaming-flume-sink_2.11-2.3.0.jar, scala-library-2.11.8.jar and commons-lang3-3.5.jar under flume/lib directory. Otherwise, you will get the following error.
+- Remember to add spark-streaming-flume-sink_2.11-2.3.0.jar, scala-library-2.11.8.jar and commons-lang3-3.5.jar under `flume/lib` directory. Otherwise, you will get following exceptions.
 - Pay attention to the version of .jar files.
 
 ```
@@ -287,6 +287,8 @@ Caused by: java.lang.ClassNotFoundException: org.apache.spark.streaming.flume.si
         ... 11 more
 ```
 
+or `Did not receive events from Flume agent due to error on the Flume agent: begin() called when transaction is OPEN!`
+
 #### server mode (in real projects)
 
 Steps:
@@ -303,7 +305,7 @@ flume-ng agent \
 ```
 
 3. In terminal C, `telnet localhost 44444`.
-4. In terminal D, run the .jar file using spark-submit. (need network to download packages)
+4. In terminal D, run the .jar file using spark-submit. (Need network to download packages, but in real projects, network will not be available. So you should use `--jars` instead of `--packages`.)
 
 ```
 spark-submit \
@@ -322,3 +324,101 @@ localhost 41414
 (b,2)
 ```
 
+### KafkaDirectWordCount.scala
+
+Integrate Spark Streaming and Kafka to do word count in direct approach. Use direct approach in real projects.
+
+**Note:**
+
+- Remember to add spark-streaming-kafka-0-8_2.11 Maven dependency in pom.xml file.
+- Comment kafka_2.11 Maven dependency in pom.xml file. Otherwise, you will get the following exception.
+
+```
+Exception in thread "main" java.lang.ClassCastException: kafka.cluster.BrokerEndPoint cannot be cast to kafka.cluster.Broker
+	at org.apache.spark.streaming.kafka.KafkaCluster$$anonfun$2$$anonfun$3$$anonfun$apply$6$$anonfun$apply$7.apply(KafkaCluster.scala:98)
+	at scala.Option.map(Option.scala:146)
+	at org.apache.spark.streaming.kafka.KafkaCluster$$anonfun$2$$anonfun$3$$anonfun$apply$6.apply(KafkaCluster.scala:98)
+	at org.apache.spark.streaming.kafka.KafkaCluster$$anonfun$2$$anonfun$3$$anonfun$apply$6.apply(KafkaCluster.scala:95)
+	at scala.collection.TraversableLike$$anonfun$flatMap$1.apply(TraversableLike.scala:241)
+	at scala.collection.TraversableLike$$anonfun$flatMap$1.apply(TraversableLike.scala:241)
+	at scala.collection.IndexedSeqOptimized$class.foreach(IndexedSeqOptimized.scala:33)
+	at scala.collection.mutable.WrappedArray.foreach(WrappedArray.scala:35)
+	at scala.collection.TraversableLike$class.flatMap(TraversableLike.scala:241)
+	at scala.collection.AbstractTraversable.flatMap(Traversable.scala:104)
+	at org.apache.spark.streaming.kafka.KafkaCluster$$anonfun$2$$anonfun$3.apply(KafkaCluster.scala:95)
+	at org.apache.spark.streaming.kafka.KafkaCluster$$anonfun$2$$anonfun$3.apply(KafkaCluster.scala:94)
+	at scala.collection.TraversableLike$$anonfun$flatMap$1.apply(TraversableLike.scala:241)
+	at scala.collection.TraversableLike$$anonfun$flatMap$1.apply(TraversableLike.scala:241)
+	at scala.collection.immutable.Set$Set1.foreach(Set.scala:94)
+	at scala.collection.TraversableLike$class.flatMap(TraversableLike.scala:241)
+	at scala.collection.AbstractTraversable.flatMap(Traversable.scala:104)
+	at org.apache.spark.streaming.kafka.KafkaCluster$$anonfun$2.apply(KafkaCluster.scala:94)
+	at org.apache.spark.streaming.kafka.KafkaCluster$$anonfun$2.apply(KafkaCluster.scala:93)
+	at scala.util.Either$RightProjection.flatMap(Either.scala:522)
+	at org.apache.spark.streaming.kafka.KafkaCluster.findLeaders(KafkaCluster.scala:93)
+	at org.apache.spark.streaming.kafka.KafkaCluster.getLeaderOffsets(KafkaCluster.scala:187)
+	at org.apache.spark.streaming.kafka.KafkaCluster.getLeaderOffsets(KafkaCluster.scala:169)
+	at org.apache.spark.streaming.kafka.KafkaCluster.getLatestLeaderOffsets(KafkaCluster.scala:158)
+	at org.apache.spark.streaming.kafka.KafkaUtils$$anonfun$5.apply(KafkaUtils.scala:216)
+	at org.apache.spark.streaming.kafka.KafkaUtils$$anonfun$5.apply(KafkaUtils.scala:212)
+	at scala.util.Either$RightProjection.flatMap(Either.scala:522)
+	at org.apache.spark.streaming.kafka.KafkaUtils$.getFromOffsets(KafkaUtils.scala:212)
+	at org.apache.spark.streaming.kafka.KafkaUtils$.createDirectStream(KafkaUtils.scala:485)
+	at com.zhandev.spark.KafkaDirectWordCount$.main(KafkaDirectWordCount.scala:33)
+	at com.zhandev.spark.KafkaDirectWordCount.main(KafkaDirectWordCount.scala)
+```
+
+**Troubleshooting:**
+
+- Problem: Cannot import "StringDecoder".
+- Solution: `import _root_.kafka.serializer.StringDecoder`.
+
+
+#### local mode
+
+Steps:
+
+1. In terminal A, start Zookeeper. Under `zookeeper/bin`, command line: `zkServer.sh start`.
+2. Start Kafka. Under `kafka_2.11-0.9.0.0`, command line: `bin/kafka-server-start.sh -daemon config/server.properties`. (`-daemon` means Kafka will run in background.)
+3. Create a topic: `bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic kafka_streaming_topic`.
+4. Check the topic: `bin/kafka-topics.sh --list --zookeeper localhost:2181`. Then "kafka_streaming_topic" will be displayed.
+5. Test to make sure Kafka works well.
+    1. Produce messages: `bin/kafka-console-producer.sh --broker-list localhost:9092 --topic kafka_streaming_topic`.
+    2. Consume messages: In terminal B, `bin/kafka-console-consumer.sh --zookeeper localhost:2181 --topic kafka_streaming_topic`.
+    3. In terminal A, type `hello`.
+    4. In terminal B, you will see `hello`.
+6. In IDEA, run KafkaDirectWordCount.scala. Edit configurations -> Program arguments, input `10.0.2.15:9092 kafka_streaming_topic`. -> Apply
+7. In terminal A, type `a a a b b`.
+8. In IDEA console, you will see
+
+```
+(b,2)
+(a,3)
+```
+
+#### server mode (in real projects)
+
+Steps: (use Kafka terminal in local mode, do not duplicate here)
+
+1, 2, 3, 4, 5 are the same as local mode.
+6. In terminal C, pack the spark project using maven, under the spark project directory, `mvn clean package -DskipTests` (skip test). Then the .jar file will be created under "target" folder.
+7. Run the .jar file using spark-submit. (Need network to download packages, but in real projects, network will not be available. So you should use `--jars` instead of `--packages`.)
+
+```
+spark-submit \
+--class com.zhandev.spark.KafkaDirectWordCount \
+--master local[2] \
+--packages org.apache.spark:spark-streaming-kafka-0-8_2.11:2.3.0 \
+/home/hadoop/IdeaProjects/sparktrain/target/spark-train-1.0.jar \
+localhost:9092 kafka_streaming_topic
+```
+
+8. In terminal A, type `a a b b`.
+9. In terminal C, you will see
+
+```
+(a,2)
+(b,2)
+```
+
+###
