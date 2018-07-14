@@ -74,7 +74,7 @@ Steps:
 
 Spark Streaming processes socket data with state and does word count. The count will be accumulated based on previous result.
 
-**Note:** If you use stateful operation，you must set checkpoint. In real projects, you should set checkpoint directory on HDFS.
+**Note:** If you use stateful operation，you must set checkpoint. In product environment, you should set checkpoint directory on HDFS.
 
 Steps:
 
@@ -187,7 +187,7 @@ Integrate Spark Streaming and Flume to process socket data and do word count in 
 **Note:**
 
 - Remember to add spark-streaming-flume Maven dependency in pom.xml file.
-- There are a bit differences between the flume config file and FlumePushWordCount file of local mode and server mode (in real projects).
+- There are a bit differences between the flume config file and FlumePushWordCount file of local mode and server mode (in product environment).
 
 #### local mode
 
@@ -213,12 +213,12 @@ flume-ng agent \
 (b,2)
 ```
 
-#### server mode (in real projects)
+#### server mode (in product environment)
 
 Steps:
 
 1. In terminal A, pack the spark project using maven, under the spark project directory, `mvn clean package -DskipTests` (skip test). Then the .jar file will be created under "target" folder.
-2. In terminal B, run the .jar file using spark-submit. (Need network to download packages, but in real projects, network will not be available. So you should use `--jars` instead of `--packages`.)
+2. In terminal B, run the .jar file using spark-submit. (Need network to download packages, but in product environment, network will not be available. So you should use `--jars` instead of `--packages`.)
 
 ```
 spark-submit \
@@ -254,7 +254,7 @@ Integrate Spark Streaming and Flume to process socket data and do word count in 
 **Note:**
 
 - Remember to add spark-streaming-flume-sink, scala-library, and commons-lang3 Maven dependencies in pom.xml file.
-- There are a bit differences between the flume config file and FlumePushWordCount file of local mode and server mode (in real projects).
+- There are a bit differences between the flume config file and FlumePushWordCount file of local mode and server mode (in product environment).
 - Start Flume first, then start Spark Streaming.
 - Remember to add spark-streaming-flume-sink_2.11-2.3.0.jar, scala-library-2.11.8.jar and commons-lang3-3.5.jar under `flume/lib` directory. Otherwise, you will get following exceptions.
 - Pay attention to the version of .jar files.
@@ -289,7 +289,7 @@ Caused by: java.lang.ClassNotFoundException: org.apache.spark.streaming.flume.si
 
 or `Did not receive events from Flume agent due to error on the Flume agent: begin() called when transaction is OPEN!`
 
-#### server mode (in real projects)
+#### server mode (in product environment)
 
 Steps:
 
@@ -305,7 +305,7 @@ flume-ng agent \
 ```
 
 3. In terminal C, `telnet localhost 44444`.
-4. In terminal D, run the .jar file using spark-submit. (Need network to download packages, but in real projects, network will not be available. So you should use `--jars` instead of `--packages`.)
+4. In terminal D, run the .jar file using spark-submit. (Need network to download packages, but in product environment, network will not be available. So you should use `--jars` instead of `--packages`.)
 
 ```
 spark-submit \
@@ -396,13 +396,13 @@ Steps:
 (a,3)
 ```
 
-#### server mode (in real projects)
+#### server mode (in product environment)
 
 Steps: (use Kafka terminal in local mode, do not duplicate here)
 
 1, 2, 3, 4, 5 are the same as local mode.
 6. In terminal C, pack the spark project using maven, under the spark project directory, `mvn clean package -DskipTests` (skip test). Then the .jar file will be created under "target" folder.
-7. Run the .jar file using spark-submit. (Need network to download packages, but in real projects, network will not be available. So you should use `--jars` instead of `--packages`.)
+7. Run the .jar file using spark-submit. (Need network to download packages, but in product environment, network will not be available. So you should use `--jars` instead of `--packages`.)
 
 ```
 spark-submit \
@@ -486,5 +486,5 @@ flume-ng agent \
 
 ## Real Project
 
-Firstly, test functionality in local mode. Then test in server mode (in real projects) with performance tuning.
+Firstly, test functionality in local mode. Then test in server mode (in product environment) with performance tuning.
 
