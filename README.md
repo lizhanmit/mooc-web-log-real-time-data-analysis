@@ -59,7 +59,7 @@ Spark Streaming processes file system (local/hdfs) data and does word count.
 
 Steps:
 
-1. In IDEA, run NetworkWordCount.scala.
+1. In IDEA, run FileWordCount.scala.
 2. Type `a a a b b c` in file1.log file. Save.
 3. Copy file1.log file to `/home/hadoop/IdeaProjects/sparktrain/src/main/resources/static/file`.
 4. In IDEA console, you will see
@@ -111,7 +111,7 @@ Steps:
 3. Use this database, `use spark`.
 4. Create a table, `create table wordcount (word varchar(50) default null, count int(10) default null);`.
 5. In terminal B, `nc -lk 6789`.
-6. In IDEA, run ForeachRDDApp.scala.
+6. In IDEA, run WordCountResultToMysql.scala.
 7. In terminal B, type `a a b c c c`.
 8. In IDEA console, you will see
 
@@ -445,8 +445,8 @@ Steps:
 
 Detailed steps:
 
-1. Create LoggerGenerator.java file to simulate web log generator.
-2. Create log4j.properties to configure LoggerGenerator.
+1. Create LoggerGenerator.java file under src/test/java directory to simulate web log generator.
+2. Create log4j.properties under src/test/resources directory to configure LoggerGenerator.
 3. Create Flume config file `log-streaming.conf`.
 4. In terminal A, start Flume.
 
@@ -488,3 +488,25 @@ flume-ng agent \
 
 Firstly, test functionality in local mode. Then test in server mode (in product environment) with performance tuning.
 
+Steps:
+
+1. Create Web log generator by using ​Python​​.
+2.
+
+
+### Web Log Generator
+
+Web log info includes ip address, query time, url path, status code, search engine refered http address, and search keyword.
+
+Steps:
+
+1. Under /home/hadoop/IdeaProjects/sparktrain/src/main/resources/logGenerator directory, create generate_log.py file.
+2. In terminal A, under /home/hadoop/IdeaProjects/sparktrain/src/main/resources/logGenerator directory, `python generate_log.py`. You will see the result which is similar with the following sample, and get access.log file under /home/hadoop/IdeaProjects/sparktrain/src/main/resources/logGenerator/log directory.
+
+```
+168.187.72.98	2018-07-15 12:09:16	"GET /class/112.html HTTP/1.1"	404	http://www.baidu.com/s?wd=Storm Tutorial
+98.30.124.55	2018-07-15 12:09:16	"GET /class/145.html HTTP/1.1"	200	-
+132.167.63.98	2018-07-15 12:09:16	"GET /course/list HTTP/1.1"	404	https://www.sogou.com/web?query=Storm Tutorial
+29.167.72.187	2018-07-15 12:09:16	"GET /class/130.html HTTP/1.1"	500	-
+167.143.124.132	2018-07-15 12:09:16	"GET /class/112.html HTTP/1.1"	404	-
+```
