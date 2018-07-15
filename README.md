@@ -2,6 +2,7 @@
 
 Version:
 
+- Linux: Ubuntu 16.04
 - Spark: 2.3.0
 - Scala: 2.11.8
 - Kafka: 0.9.0.0
@@ -463,9 +464,9 @@ flume-ng agent \
 7. Start Kafka. Under `kafka_2.11-0.9.0.0`, command line: `bin/kafka-server-start.sh -daemon config/server.properties`. (`-daemon` means Kafka will run in background.)
 8. Create a topic: `bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic log_streaming_topic`.
 9. Check the topic: `bin/kafka-topics.sh --list --zookeeper localhost:2181`. Then "log_streaming_topic" will be displayed.
-10. Create Flume config file `log-streaming-2.conf`.
+10. Create Flume config file (log-streaming-2.conf).
 11. In terminal A, use `jps` to check JVM processes, and then use `kill -9 <process number>` to kill `log-streaming.conf` Flume application.
-12. Start Flume (`log-streaming-2.conf`).
+12. Start Flume (log-streaming-2.conf).
 
 ```
 flume-ng agent \
@@ -484,24 +485,25 @@ flume-ng agent \
 
 ---
 
-## Real Project
+## Spark Streaming Real Project
 
 Firstly, test functionality in local mode. Then test in server mode (in product environment) with performance tuning.
 
 Steps:
 
-1. Create Web log generator by using ​Python​​.
-2.
+1. Create web log generator by using ​Python​​.
+2. Collect web log from the generator by using Flume.
+3. Send web log from Flume to Kafka.
 
 
 ### Web Log Generator
 
 Web log info includes ip address, query time, url path, status code, search engine refered http address, and search keyword.
 
-Steps:
+Detailed steps:
 
-1. Under /home/hadoop/IdeaProjects/sparktrain/src/main/resources/logGenerator directory, create generate_log.py file.
-2. In terminal A, under /home/hadoop/IdeaProjects/sparktrain/src/main/resources/logGenerator directory, `python generate_log.py`. You will see the result which is similar with the following sample, and get access.log file under /home/hadoop/IdeaProjects/sparktrain/src/main/resources/logGenerator/log directory.
+1. Create generate_log.py file, under /home/hadoop/IdeaProjects/sparktrain/src/main/resources/logGenerator directory.
+2. In new terminal A, `cd /home/hadoop/IdeaProjects/sparktrain/src/main/resources/logGenerator`, `python generate_log.py`. You will see the result which is similar with the following sample log, and get access.log file under /home/hadoop/IdeaProjects/sparktrain/src/main/resources/logGenerator/log directory.
 
 ```
 168.187.72.98	2018-07-15 12:09:16	"GET /class/112.html HTTP/1.1"	404	http://www.baidu.com/s?wd=Storm Tutorial
@@ -509,4 +511,81 @@ Steps:
 132.167.63.98	2018-07-15 12:09:16	"GET /course/list HTTP/1.1"	404	https://www.sogou.com/web?query=Storm Tutorial
 29.167.72.187	2018-07-15 12:09:16	"GET /class/130.html HTTP/1.1"	500	-
 167.143.124.132	2018-07-15 12:09:16	"GET /class/112.html HTTP/1.1"	404	-
+...
+```
+
+3. Automatically generate log info every minute.
+    1. Create log_generator.sh file under /home/hadoop/IdeaProjects/sparktrain/src/main/resources/logGenerator directory.
+    2. Add execution permission for log_generator.sh file. In terminal A, `chmod u+x log_generator.sh`.
+    3. Check permission of log_generator.sh file. `ll`. You will see `-rwxrw-r-- 1 hadoop hadoop   91 Jul 15 14:02 log_generator.sh*`.
+    4. Automatically generate log info. `crontab -e`. Insert `*/1 * * * * /home/hadoop/IdeaProjects/sparktrain/src/main/resources/logGenerator/log_generator.sh`.
+    5. Check access.log file, you will see new web log info every minute.
+
+### Web Log ==> Flume
+
+Detailed steps:
+
+4. Create Flume file (streaming-project.conf).
+5. In terminal A, start Flume. Then you will see web log info every minute.
+
+```
+flume-ng agent \
+--name exec-memory-logger \
+--conf $FLUME_HOME/conf \
+--conf-file /home/hadoop/IdeaProjects/sparktrain/src/main/resources/static/flume/streaming-project.conf \
+-Dflume.root.logger=INFO,console
+```
+
+### Web Log ==> Flume ==> Kafka
+
+Detailed steps:
+
+6. In new terminal B, start Zookeeper. Under `zookeeper/bin`, command line: `zkServer.sh start`.
+7. Start Kafka. Under `kafka_2.11-0.9.0.0`, command line: `bin/kafka-server-start.sh -daemon config/server.properties`. (`-daemon` means Kafka will run in background.)
+8. Create a topic: `bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic streaming_project_topic`.
+9. Check the topic: `bin/kafka-topics.sh --list --zookeeper localhost:2181`. Then "streaming_project_topic" will be displayed.
+10. Create Flume file (streaming-project-2.conf).
+11. In terminal A, start Flume (streaming-project-2.conf).
+
+```
+flume-ng agent \
+--name exec-memory-kafka \
+--conf $FLUME_HOME/conf \
+--conf-file /home/hadoop/IdeaProjects/sparktrain/src/main/resources/static/flume/streaming-project-2.conf \
+-Dflume.root.logger=INFO,console
+```
+
+12. Create a Kafka consumer. In terminal B, `bin/kafka-console-consumer.sh --zookeeper localhost:2181 --topic streaming_project_topic`. Then you will see wen log info every minute.
+
+### Web Log ==> Flume ==> Kafka ==> Spark Streaming
+
+Detailed steps:
+
+13. In IDEA, create and run StatStreamingProjectApp.scala (without "data cleansing" code). Edit configurations -> Program arguments, input `10.0.2.15:9092 streaming_project_topic`. -> Apply
+14. In IDEA console, you will see `100` every minute.
+
+### Web Log ==> Flume ==> Kafka ==> Spark Streaming ==> Data Cleansing
+
+Do data cleansing for real-time click stream data (web log).
+
+There are three kinds of data in the web log:
+
+- /class/<courseId>.html: class type course url.
+- /learn/<courseId>: learn type course url.
+- /course/list: course list url.
+
+Here we only care about class type course url, so the other two kinds of data need to be filtered out.
+
+Detailed steps:
+
+15. In IDEA, create and run DateUtils.scala. You will see `20180715172501` in console.
+16. Create ClickLog.scala. ClickLog case class is the class of log info after data cleansing.
+17. Modify StatStreamingProjectApp.scala. Add "data cleansing" code. Run. You will see similar results as follows in the console.
+
+```
+ClickLog(156.46.55.87,20180715175101,131,404,http://www.baidu.com/s?wd=Storm Tutorial)
+ClickLog(72.63.168.156,20180715175101,130,500,-)
+ClickLog(30.168.156.187,20180715175101,130,500,-)
+ClickLog(72.55.187.87,20180715175101,145,200,-)
+...
 ```
