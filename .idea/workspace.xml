@@ -37,8 +37,8 @@
       <file leaf-file-name="README.md" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/README.md">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="17">
-              <caret line="566" column="70" selection-start-line="566" selection-start-column="52" selection-end-line="566" selection-end-column="70" />
+            <state relative-caret-position="134">
+              <caret line="494" column="123" selection-start-line="494" selection-start-column="123" selection-end-line="494" selection-end-column="123" />
             </state>
           </provider>
         </entry>
@@ -192,23 +192,6 @@
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="resources" type="462c0819:PsiDirectoryNode" />
-              <item name="logGenerator" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="sparktrain" type="b2602c69:ProjectViewProjectNode" />
-              <item name="sparktrain" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="resources" type="462c0819:PsiDirectoryNode" />
-              <item name="logGenerator" type="462c0819:PsiDirectoryNode" />
-              <item name="log" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="sparktrain" type="b2602c69:ProjectViewProjectNode" />
-              <item name="sparktrain" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="resources" type="462c0819:PsiDirectoryNode" />
               <item name="static" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -218,7 +201,7 @@
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="resources" type="462c0819:PsiDirectoryNode" />
               <item name="static" type="462c0819:PsiDirectoryNode" />
-              <item name="flume" type="462c0819:PsiDirectoryNode" />
+              <item name="img" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="sparktrain" type="b2602c69:ProjectViewProjectNode" />
@@ -477,7 +460,7 @@
       <window_info anchor="bottom" id="Terminal" order="7" />
       <window_info id="Capture Tool" order="2" />
       <window_info id="Designer" order="2" />
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.24247104" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24247104" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info id="UI Designer" order="2" />
@@ -841,8 +824,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="566" column="70" selection-start-line="566" selection-start-column="52" selection-end-line="566" selection-end-column="70" />
+        <state relative-caret-position="134">
+          <caret line="494" column="123" selection-start-line="494" selection-start-column="123" selection-end-line="494" selection-end-column="123" />
         </state>
       </provider>
     </entry>

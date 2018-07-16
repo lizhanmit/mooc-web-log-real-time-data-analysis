@@ -481,7 +481,18 @@ flume-ng agent \
 15. Create logStreamingApp.scala file. Run. Edit configurations -> Program arguments, input `10.0.2.15:9092 log_streaming_topic`. -> Apply
 16. In IDEA console, you will see the result.
 
-![log-streaming-operation-in-real-projects.png](src/main/resources/static/img/log-streaming-operation-in-real-projects.png)
+**Note:**
+
+Now the program is tested in local environment. LoggerGenerator.java is run in IDEA. Then we use Flume, Kafka and Spark Streaming to process data.
+
+However, we cannot do it for real projects in product environment. Then what should we do?
+
+1. Pack LoggerGenerator.java as a .jar file.
+2. Flume and Kafka are the same as we did in local environment.
+3. Pack Spark Streaming program (logStreamingApp.scala) as a .jar file. Then run `spark-submit` in terminal.
+4. Choose running mode according to the actual situation: local/yarn/standalone/mesos.
+
+For test and real projects, the whole processing workflow is the same. The difference is the complexity of business logic.
 
 ---
 
@@ -517,7 +528,7 @@ Detailed steps:
 3. Automatically generate log info every minute.
     1. Create log_generator.sh file under /home/hadoop/IdeaProjects/sparktrain/src/main/resources/logGenerator directory.
     2. Add execution permission for log_generator.sh file. In terminal A, `chmod u+x log_generator.sh`.
-    3. Check permission of log_generator.sh file. `ll`. You will see `-rwxrw-r-- 1 hadoop hadoop   91 Jul 15 14:02 log_generator.sh*`.
+    3. Check permission of log_generator.sh file. `ll`. You will see "-rwxrw-r-- 1 hadoop hadoop   91 Jul 15 14:02 log_generator.sh*".
     4. Automatically generate log info. `crontab -e`. Insert `*/1 * * * * /home/hadoop/IdeaProjects/sparktrain/src/main/resources/logGenerator/log_generator.sh`.
     5. Check access.log file, you will see new web log info every minute.
 
@@ -589,3 +600,10 @@ ClickLog(30.168.156.187,20180715175101,130,500,-)
 ClickLog(72.55.187.87,20180715175101,145,200,-)
 ...
 ```
+
+### Do Statistics about Page View (PV)
+
+Do statistics about page view or click count of class type courses today up to now.
+
+Detailed steps:
+
