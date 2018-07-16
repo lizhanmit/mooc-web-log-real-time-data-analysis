@@ -1,6 +1,6 @@
 # Spark Streaming Real Project Tutorial
 
-Version:
+**Version:**
 
 - Linux: Ubuntu 16.04
 - Spark: 2.3.0
@@ -14,7 +14,7 @@ Version:
 
 KafkaProducer.java produces messages and KafkaConsumer.java consumes messages.
 
-Steps:
+**Steps:**
 
 1. In terminal A, start ZooKeeper. Under `zookeeper/bin`, command line: `zkServer.sh start`.
 2. In terminal B, start Kafka. Under `kafka_2.11-0.9.0.0`, command line: `bin/kafka-server-start.sh config/server.properties`.
@@ -37,7 +37,7 @@ receive: message_2
 
 Spark Streaming receives socket data and does word count.
 
-Steps:
+**Steps:**
 
 1. In terminal A, `nc -lk 6789`.
 2. In IDEA, run NetworkWordCount.scala.
@@ -58,7 +58,7 @@ Steps:
 
 Spark Streaming processes file system (local/hdfs) data and does word count.
 
-Steps:
+**Steps:**
 
 1. In IDEA, run FileWordCount.scala.
 2. Type `a a a b b c` in file1.log file. Save.
@@ -77,7 +77,7 @@ Spark Streaming processes socket data with state and does word count. The count 
 
 **Note:** If you use stateful operation，you must set checkpoint. In product environment, you should set checkpoint directory on HDFS.
 
-Steps:
+**Steps:**
 
 1. In terminal A, `nc -lk 6789`.
 2. In IDEA, run StatefulWordCount.scala.
@@ -105,7 +105,7 @@ Spark Streaming processes socket data and save the wordcount result into MySQL.
 
 **Note:** Remember to add MySQL Maven dependency in pom.xml file.
 
-Steps:
+**Steps:**
 
 1. In terminal A, start MySQL, `mysql -u root -p`. Enter password.
 2. Create a database, `create database spark;`.
@@ -136,7 +136,7 @@ Steps:
 
 Use Spark Streaming to filter records of log data which are in blacklist.
 
-Steps:
+**Steps:**
 
 1. In terminal A, `nc -lk 6789`.
 2. In IDEA, run BlacklistFiltering.scala.
@@ -164,7 +164,7 @@ Integrate Spark Streaming and Spark SQL to process socket data and do word count
 
 **Note:** Remember to add spark-sql Maven dependency in pom.xml file.
 
-Steps:
+**Steps:**
 
 1. In terminal A, `nc -lk 6789`.
 2. In IDEA, run SparkSqlNetworkWordCount.scala.
@@ -192,7 +192,7 @@ Integrate Spark Streaming and Flume to process socket data and do word count in 
 
 #### local mode
 
-Steps:
+**Steps:**
 
 1. Create Flume config file (flume-push-streaming.conf).
 2. In IDEA, run FlumePushWordCount.scala. Edit configurations -> Program arguments, input `10.0.2.15 41414`. -> Apply
@@ -216,7 +216,7 @@ flume-ng agent \
 
 #### server mode (in product environment)
 
-Steps:
+**Steps:**
 
 1. In terminal A, pack the spark project using maven, under the spark project directory, `mvn clean package -DskipTests` (skip test). Then the .jar file will be created under "target" folder.
 2. In terminal B, run the .jar file using spark-submit. (Need network to download packages, but in product environment, network will not be available. So you should use `--jars` instead of `--packages`.)
@@ -292,7 +292,7 @@ or `Did not receive events from Flume agent due to error on the Flume agent: beg
 
 #### server mode (in product environment)
 
-Steps:
+**Steps:**
 
 1. In terminal A, pack the spark project using maven, under the spark project directory, `mvn clean package -DskipTests` (skip test). Then the .jar file will be created under "target" folder.
 2. In terminal B, start Flume.
@@ -377,7 +377,7 @@ Exception in thread "main" java.lang.ClassCastException: kafka.cluster.BrokerEnd
 
 #### local mode
 
-Steps:
+**Steps:**
 
 1. In terminal A, start Zookeeper. Under `zookeeper/bin`, command line: `zkServer.sh start`.
 2. Start Kafka. Under `kafka_2.11-0.9.0.0`, command line: `bin/kafka-server-start.sh -daemon config/server.properties`. (`-daemon` means Kafka will run in background.)
@@ -399,7 +399,7 @@ Steps:
 
 #### server mode (in product environment)
 
-Steps: (use Kafka terminal in local mode, do not duplicate here)
+**Steps:** (use Kafka terminal in local mode, do not duplicate here)
 
 1, 2, 3, 4, 5 are the same as local mode.
 6. In terminal C, pack the spark project using maven, under the spark project directory, `mvn clean package -DskipTests` (skip test). Then the .jar file will be created under "target" folder.
@@ -430,11 +430,9 @@ Collect web log by using Flume, then send to Kafka, then process by using Spark 
 
 ![log-streaming-workflow-architecture.png](src/main/resources/static/img/log-streaming-workflow-architecture.png)
 
-**Note:**
+**Note:** Remember to add flume-ng-log4jappender Maven dependency in pom.xml file. Otherwise, you will get `java.lang.ClassNotFoundException: org.apache.flume.clients.log4jappender.Log4jAppender`.
 
-- Remember to add flume-ng-log4jappender Maven dependency in pom.xml file. Otherwise, you will get `java.lang.ClassNotFoundException: org.apache.flume.clients.log4jappender.Log4jAppender`.
-
-Steps:
+**Steps:**
 
 1. Create LoggerGenerator to generate web log info.
 2. Create log4j.properties to configure LoggerGenerator.
@@ -444,7 +442,7 @@ Steps:
 6. Run LoggerGenerator.
 7. Create and run logStreamingApp.
 
-Detailed steps:
+**Detailed steps:**
 
 1. Create LoggerGenerator.java file under src/test/java directory to simulate web log generator.
 2. Create log4j.properties under src/test/resources directory to configure LoggerGenerator.
@@ -481,11 +479,7 @@ flume-ng agent \
 15. Create logStreamingApp.scala file. Run. Edit configurations -> Program arguments, input `10.0.2.15:9092 log_streaming_topic`. -> Apply
 16. In IDEA console, you will see the result.
 
-**Note:**
-
-Now the program is tested in local environment. LoggerGenerator.java is run in IDEA. Then we use Flume, Kafka and Spark Streaming to process data.
-
-However, we cannot do it for real projects in product environment. Then what should we do?
+**Note:** Now the program is tested in local environment. LoggerGenerator.java is run in IDEA. Then we use Flume, Kafka and Spark Streaming to process data. However, we cannot do it for real projects in product environment. Then what should we do?
 
 1. Pack LoggerGenerator.java as a .jar file.
 2. Flume and Kafka are the same as we did in local environment.
@@ -500,7 +494,7 @@ For test and real projects, the whole processing workflow is the same. The diffe
 
 Firstly, test functionality in local mode. Then test in server mode (in product environment) with performance tuning.
 
-Steps:
+**Steps:**
 
 1. Create web log generator by using ​Python​​.
 2. Collect web log from the generator by using Flume.
@@ -511,7 +505,7 @@ Steps:
 
 Web log info includes ip address, query time, url path, status code, search engine refered http address, and search keyword.
 
-Detailed steps:
+**Detailed steps:**
 
 1. Create generate_log.py file, under /home/hadoop/IdeaProjects/sparktrain/src/main/resources/logGenerator directory.
 2. In new terminal A, `cd /home/hadoop/IdeaProjects/sparktrain/src/main/resources/logGenerator`, `python generate_log.py`. You will see the result which is similar with the following sample log, and get access.log file under /home/hadoop/IdeaProjects/sparktrain/src/main/resources/logGenerator/log directory.
@@ -534,7 +528,7 @@ Detailed steps:
 
 ### Web Log ==> Flume
 
-Detailed steps:
+**Detailed steps:**
 
 4. Create Flume file (streaming-project.conf).
 5. In terminal A, start Flume. Then you will see web log info every minute.
@@ -549,7 +543,7 @@ flume-ng agent \
 
 ### Web Log ==> Flume ==> Kafka
 
-Detailed steps:
+**Detailed steps:**
 
 6. In new terminal B, start Zookeeper. Under `zookeeper/bin`, command line: `zkServer.sh start`.
 7. Start Kafka. Under `kafka_2.11-0.9.0.0`, command line: `bin/kafka-server-start.sh -daemon config/server.properties`. (`-daemon` means Kafka will run in background.)
@@ -570,7 +564,7 @@ flume-ng agent \
 
 ### Web Log ==> Flume ==> Kafka ==> Spark Streaming
 
-Detailed steps:
+**Detailed steps:**
 
 13. In IDEA, create and run StatStreamingProjectApp.scala (without "data cleansing" code). Edit configurations -> Program arguments, input `10.0.2.15:9092 streaming_project_topic`. -> Apply
 14. In IDEA console, you will see `100` every minute.
@@ -587,7 +581,7 @@ There are three kinds of data in the web log:
 
 Here we only care about class type course url, so the other two kinds of data need to be filtered out.
 
-Detailed steps:
+**Detailed steps:**
 
 15. In IDEA, create and run DateUtils.scala. You will see `20180715172501` in console.
 16. Create ClickLog.scala. ClickLog case class is the class of log info after data cleansing.
@@ -603,7 +597,41 @@ ClickLog(72.55.187.87,20180715175101,145,200,-)
 
 ### Do Statistics about Page View (PV)
 
-Do statistics about page view or click count of class type courses today up to now.
+Do statistics about page view or click count of class type courses today up to now to figure out how many times a specific class type course has been visited today up to now.
 
-Detailed steps:
+**Steps:**
 
+1. Save statistical results into database.
+2. Display statistical results according to "yyyyMMdd" and "courseId" at front end.
+
+**What kind of database should we use?** (HBase)
+
+- RDBMS: MySQL、Oracle...
+
+| day | course_id | click_count |
+|-----|-----------|-------------|
+| 20180101 | 123 | 10 |
+| 20180101 | 456 | 20 |
+
+When there is a new batch of data coming in, you need to do:
+
+According to day and course_id, get click_count, plus new statistical results, then save into database.
+
+- NoSQL: HBase、Redis....
+
+HBase: very handy with one API.
+
+According to day and course_id, get click_count, plus new statistical results directly.
+
+That is the reason that we choose HBase as the database.
+
+**Detailed steps:**
+
+18. Start HDFS. In terminal, `start-dfs.sh`.
+19. Start HBase. In terminal, `start-hbase.sh`.
+20. Go into HBase. In terminal, `hbase shell`.
+21. Create table in database.
+    1. In HBase shell, `create 'mooc_course_clickcount', 'info'`. Table name is "mooc_course_clickcount" and column family name is "info".
+    2. Check table: `describe 'mooc_course_clickcount'`.
+    3. Check records: `scan `mooc_course_clickcount'`.
+    4. Design the Rowkey: "day_courseId"
