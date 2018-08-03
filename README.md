@@ -75,7 +75,7 @@ Spark Streaming processes file system (local/hdfs) data and does word count.
 
 Spark Streaming processes socket data with state and does word count. The count will be accumulated based on previous result.
 
-**Note:** If you use stateful operation，you must set checkpoint. In product environment, you should set checkpoint directory on HDFS.
+**Note:** If you use stateful operation，you must set checkpoint. In production environment, you should set checkpoint directory on HDFS.
 
 **Steps:**
 
@@ -188,7 +188,7 @@ Integrate Spark Streaming and Flume to process socket data and do word count in 
 **Note:**
 
 - Remember to add spark-streaming-flume Maven dependency in pom.xml file.
-- There are a bit differences between the flume config file and FlumePushWordCount file of local mode and server mode (in product environment).
+- There are a bit differences between the flume config file and FlumePushWordCount file of local mode and server mode (in production environment).
 
 #### local mode
 
@@ -214,12 +214,12 @@ flume-ng agent \
 (b,2)
 ```
 
-#### server mode (in product environment)
+#### server mode (in production environment)
 
 **Steps:**
 
 1. In terminal A, pack the spark project using maven, under the spark project directory, `mvn clean package -DskipTests` (skip test). Then the .jar file will be created under "target" folder.
-2. In terminal B, run the .jar file using spark-submit. (Need network to download packages, but in product environment, network will not be available. So you should use `--jars` instead of `--packages`.)
+2. In terminal B, run the .jar file using spark-submit. (Need network to download packages, but in production environment, network will not be available. So you should use `--jars` instead of `--packages`.)
 
 ```
 spark-submit \
@@ -255,7 +255,7 @@ Integrate Spark Streaming and Flume to process socket data and do word count in 
 **Note:**
 
 - Remember to add spark-streaming-flume-sink, scala-library, and commons-lang3 Maven dependencies in pom.xml file.
-- There are a bit differences between the flume config file and FlumePushWordCount file of local mode and server mode (in product environment).
+- There are a bit differences between the flume config file and FlumePushWordCount file of local mode and server mode (in production environment).
 - Start Flume first, then start Spark Streaming.
 - Remember to add spark-streaming-flume-sink_2.11-2.3.0.jar, scala-library-2.11.8.jar and commons-lang3-3.5.jar under `flume/lib` directory. Otherwise, you will get following exceptions.
 - Pay attention to the version of .jar files.
@@ -290,7 +290,7 @@ Caused by: java.lang.ClassNotFoundException: org.apache.spark.streaming.flume.si
 
 or `Did not receive events from Flume agent due to error on the Flume agent: begin() called when transaction is OPEN!`
 
-#### server mode (in product environment)
+#### server mode (in production environment)
 
 **Steps:**
 
@@ -306,7 +306,7 @@ flume-ng agent \
 ```
 
 3. In terminal C, `telnet localhost 44444`.
-4. In terminal D, run the .jar file using spark-submit. (Need network to download packages, but in product environment, network will not be available. So you should use `--jars` instead of `--packages`.)
+4. In terminal D, run the .jar file using spark-submit. (Need network to download packages, but in production environment, network will not be available. So you should use `--jars` instead of `--packages`.)
 
 ```
 spark-submit \
@@ -397,13 +397,13 @@ Exception in thread "main" java.lang.ClassCastException: kafka.cluster.BrokerEnd
 (a,3)
 ```
 
-#### server mode (in product environment)
+#### server mode (in production environment)
 
 **Steps:** (use Kafka terminal in local mode, do not duplicate here)
 
 1, 2, 3, 4, 5 are the same as local mode.
 6. In terminal C, pack the spark project using maven, under the spark project directory, `mvn clean package -DskipTests` (skip test). Then the .jar file will be created under "target" folder.
-7. Run the .jar file using spark-submit. (Need network to download packages, but in product environment, network will not be available. So you should use `--jars` instead of `--packages`.)
+7. Run the .jar file using spark-submit. (Need network to download packages, but in production environment, network will not be available. So you should use `--jars` instead of `--packages`.)
 
 ```
 spark-submit \
@@ -479,7 +479,7 @@ flume-ng agent \
 15. Create logStreamingApp.scala file. Run. Edit configurations -> Program arguments, input `10.0.2.15:9092 log_streaming_topic`. -> Apply
 16. In IDEA console, you will see the result.
 
-**Note:** Now the program is tested in local environment. LoggerGenerator.java is run in IDEA. Then we use Flume, Kafka and Spark Streaming to process data. However, we cannot do it for real projects in product environment. Then what should we do?
+**Note:** Now the program is tested in local environment. LoggerGenerator.java is run in IDEA. Then we use Flume, Kafka and Spark Streaming to process data. However, we cannot do it for real projects in production environment. Then what should we do?
 
 1. Pack LoggerGenerator.java as a .jar file.
 2. Flume and Kafka are the same as we did in local environment.
@@ -492,13 +492,14 @@ For test and real projects, the whole processing workflow is the same. The diffe
 
 ## Spark Streaming Real Project
 
-Firstly, test functionality in local mode. Then test in server mode (in product environment) with performance tuning.
+Firstly, test functionality in local mode. Then test in server mode (in production environment) with performance tuning.
 
 **Steps:**
 
 1. Create web log generator by using ​Python​​.
 2. Collect web log from the generator by using Flume.
 3. Send web log from Flume to Kafka.
+4. Send web log from Kafka to Spark Streaming and do data cleansing.
 
 
 ### Web Log Generator
@@ -583,8 +584,8 @@ Here we only care about class type course url, so the other two kinds of data ne
 
 **Detailed steps:**
 
-15. In IDEA, create and run DateUtils.scala. You will see `20180715172501` in console.
-16. Create ClickLog.scala. ClickLog case class is the class of log info after data cleansing.
+15. In IDEA, create and run DateUtils.scala under "src/main/scala/com/zhandev/spark/project/utils" folder. You will see `20180715172501` in console.
+16. Create ClickLog.scala under "src/main/scala/com/zhandev/spark/project/domain" folder. ClickLog case class is the class of log info after data cleansing.
 17. Modify StatStreamingProjectApp.scala. Add "data cleansing" code. Run. You will see similar results as follows in the console.
 
 ```
@@ -602,7 +603,7 @@ Do statistics about page view or click count of class type courses today up to n
 **Steps:**
 
 1. Save statistical results into database.
-2. Display statistical results according to "yyyyMMdd" and "courseId" at front end.
+2. Get data from database and display statistical results according to "yyyyMMdd" and "courseId" at front end.
 
 **What kind of database should we use?** (HBase)
 
@@ -629,9 +630,15 @@ That is the reason that we choose HBase as the database.
 
 18. Start HDFS. In terminal, `start-dfs.sh`.
 19. Start HBase. In terminal, `start-hbase.sh`.
+    - Make sure you have already started Zookeeper. Otherwise, you will get such an error "ERROR: Can't get master address from ZooKeeper; znode data == null".
+    - Make sure in hbase-env.sh file, `export HBASE_MANAGES_ZK=false`. Set as false for real projects.
 20. Go into HBase. In terminal, `hbase shell`.
-21. Create table in database.
+21. Create table in HBase.
     1. In HBase shell, `create 'mooc_course_clickcount', 'info'`. Table name is "mooc_course_clickcount" and column family name is "info".
     2. Check table: `describe 'mooc_course_clickcount'`.
-    3. Check records: `scan `mooc_course_clickcount'`.
-    4. Design the Rowkey: "day_courseId"
+    3. Check records: `scan 'mooc_course_clickcount'`.
+    4. Design the rowkey of the table: "day_courseId" (e.g. 20180101_123).
+22. Create ClassTypeCourseClickCount.scala under "src/main/scala/com/zhandev/spark/project/domain" folder.
+23. Create ClassTypeCourseClickCountDao.scala under "src/main/scala/com/zhandev/spark/project/dao" folder.
+24. Create HBaseUtils.java under "src/main/java/com/zhan/dev/spark/project/utils" folder.
+25.
