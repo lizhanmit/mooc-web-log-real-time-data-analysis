@@ -5,7 +5,7 @@ import java.util.Date
 import org.apache.commons.lang3.time.FastDateFormat
 
 /**
-  * Time and date utils
+  * Time and date utils.
   */
 object DateUtils {
 
@@ -21,6 +21,9 @@ object DateUtils {
     TARGE_FORMAT.format(new Date(getTime(time)))
   }
 
+  /**
+    * For testing functions.
+    */
   def main(args: Array[String]): Unit = {
 
     println(parseToMinute("2018-07-15 17:25:01"))

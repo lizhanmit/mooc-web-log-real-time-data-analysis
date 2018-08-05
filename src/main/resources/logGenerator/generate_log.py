@@ -28,7 +28,8 @@ search_keyword = [
     "Hadoop Basics",
     "Storm Tutorial",
     "Spark Streaming Tutorial",
-    "Big Data Interview Skills"
+    "Big Data Interview Skills",
+    "HBase Tutorial"
 ]
 
 status_codes = ["200", "404", "500"]

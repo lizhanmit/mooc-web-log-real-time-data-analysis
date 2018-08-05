@@ -401,7 +401,7 @@ Exception in thread "main" java.lang.ClassCastException: kafka.cluster.BrokerEnd
 
 **Steps:** (use Kafka terminal in local mode, do not duplicate here)
 
-1, 2, 3, 4, 5 are the same as local mode.
+Step 1, 2, 3, 4, 5 are the same as in local mode.
 6. In terminal C, pack the spark project using maven, under the spark project directory, `mvn clean package -DskipTests` (skip test). Then the .jar file will be created under "target" folder.
 7. Run the .jar file using spark-submit. (Need network to download packages, but in production environment, network will not be available. So you should use `--jars` instead of `--packages`.)
 
@@ -500,6 +500,8 @@ Firstly, test functionality in local mode. Then test in server mode (in producti
 2. Collect web log from the generator by using Flume.
 3. Send web log from Flume to Kafka.
 4. Send web log from Kafka to Spark Streaming and do data cleansing.
+5. Save data into HBase.
+6.
 
 
 ### Web Log Generator
@@ -561,7 +563,7 @@ flume-ng agent \
 -Dflume.root.logger=INFO,console
 ```
 
-12. Create a Kafka consumer. In terminal B, `bin/kafka-console-consumer.sh --zookeeper localhost:2181 --topic streaming_project_topic`. Then you will see wen log info every minute.
+12. Create a Kafka consumer. In terminal B, `bin/kafka-console-consumer.sh --zookeeper localhost:2181 --topic streaming_project_topic`. Then you will see web log info every minute.
 
 ### Web Log ==> Flume ==> Kafka ==> Spark Streaming
 
@@ -598,12 +600,12 @@ ClickLog(72.55.187.87,20180715175101,145,200,-)
 
 ### Do Statistics about Page View (PV)
 
-Do statistics about page view or click count of class type courses today up to now to figure out how many times a specific class type course has been visited today up to now.
+#### Do statistics about page view (click count) of class type courses today up to now to figure out how many times a specific class type course has been visited today up to now. Then save statistical results into database.
 
 **Steps:**
 
 1. Save statistical results into database.
-2. Get data from database and display statistical results according to "yyyyMMdd" and "courseId" at front end.
+~~2. Get data from database and display statistical results according to "yyyyMMdd" and "courseId" at front end.~~
 
 **What kind of database should we use?** (HBase)
 
@@ -641,4 +643,200 @@ That is the reason that we choose HBase as the database.
 22. Create ClassTypeCourseClickCount.scala under "src/main/scala/com/zhandev/spark/project/domain" folder.
 23. Create ClassTypeCourseClickCountDao.scala under "src/main/scala/com/zhandev/spark/project/dao" folder.
 24. Create HBaseUtils.java under "src/main/java/com/zhan/dev/spark/project/utils" folder.
-25.
+25. Modify StatStreamingProjectApp.scala. Add "save data into HBase" code. Run. In HBase shell, check data in table, `scan 'mooc_course_clickcount'`, you should see data has been inserted into the table, and get such similar results.
+
+```
+20180804_112         column=info:click_count, timestamp=1533345420459, value=\x
+                      00\x00\x00\x00\x00\x00\x00\x19
+20180804_128         column=info:click_count, timestamp=1533345420468, value=\x
+                      00\x00\x00\x00\x00\x00\x00\x1E
+20180804_130         column=info:click_count, timestamp=1533345420480, value=\x
+                      00\x00\x00\x00\x00\x00\x00\x1E
+20180804_131         column=info:click_count, timestamp=1533345420476, value=\x
+                      00\x00\x00\x00\x00\x00\x00\x14
+20180804_145         column=info:click_count, timestamp=1533345420474, value=\x
+                      00\x00\x00\x00\x00\x00\x00\x15
+20180804_146         column=info:click_count, timestamp=1533345420464, value=\x
+                      00\x00\x00\x00\x00\x00\x00\x18
+...
+```
+
+#### Do statistics about page view (click count) of class type courses today up to now which is contributed by search engines. This statistical result can be used to learn effectiveness of advertisements in various search engines. Then save statistical results into database.
+
+26. Create another table in HBase.
+    1. In HBase shell, `create 'mooc_course_search_clickcount', 'info'`. Table name is "mooc_course_search_clickcount" and column family name is "info".
+    2. Check table: `describe 'mooc_course_search_clickcount'`.
+    3. Check records: `scan 'mooc_course_search_clickcount'`.
+    4. Design the rowkey of the table: "day_serachEngine_courseId" (e.g. 20180101_www.google.com_123).
+27. Create ClassTypeCourseSearchClickCount.scala under "src/main/scala/com/zhandev/spark/project/domain" folder.
+28. Create ClassTypeCourseSearchClickCountDao.scala under "src/main/scala/com/zhandev/spark/project/dao" folder.
+29. Modify StatStreamingProjectApp.scala. Add "save data into HBase (search engine)" code. Run. In HBase shell, check data in table, `scan 'mooc_course_search_clickcount'`, you should see data has been inserted into the table, and get such similar results.
+
+```
+20180804_cn.bing.com_131 column=info:click_count, timestamp=1533363480417, value=\x00\x00\x00\x
+                          00\x00\x00\x00\x01
+20180804_cn.bing.com_145 column=info:click_count, timestamp=1533363480429, value=\x00\x00\x00\x
+                      00\x00\x00\x00\x03
+20180804_search.yahoo.co column=info:click_count, timestamp=1533363424265, value=\x00\x00\x00\x
+m_112                    00\x00\x00\x00\x01
+20180804_search.yahoo.co column=info:click_count, timestamp=1533363424245, value=\x00\x00\x00\x
+m_128                    00\x00\x00\x00\x03
+20180804_search.yahoo.co column=info:click_count, timestamp=1533363424256, value=\x00\x00\x00\x
+m_145                    00\x00\x00\x00\x01
+20180804_search.yahoo.co column=info:click_count, timestamp=1533363480412, value=\x00\x00\x00\x
+m_146                    00\x00\x00\x00\x01
+20180804_www.baidu.com_1 column=info:click_count, timestamp=1533363480442, value=\x00\x00\x00\x
+12                       00\x00\x00\x00\x02
+...
+```
+
+30. Deploy to the production environment.
+    1. Modify StatStreamingProjectApp.scala. Switch to server mode.
+    2. In terminal, pack the spark project using maven, under the spark project directory, `mvn clean package -DskipTests` (skip test). Then the .jar file will be created under "target" folder.
+    3. You will get such an error. "error: object HBaseUtils is not a member of package com.zhandev.spark.project.utils".
+        - Reason: HBaseUtils.java is not in the compile scope.
+        - Solution: In pom.xml, comment the below in <build></build>.
+
+        ```
+        <sourceDirectory>src/main/scala</sourceDirectory>
+        <testSourceDirectory>src/test/scala</testSourceDirectory>
+        ```
+
+    4. Run the .jar file using spark-submit.
+
+    ```
+    spark-submit \
+    --class com.zhandev.spark.project.spark.StatStreamingProjectApp \
+    --master local[2] \
+    /home/hadoop/IdeaProjects/sparktrain/target/spark-train-1.0.jar \
+    10.0.2.15:9092 streaming_project_topic
+    ```
+
+    5. You will get such an exception.
+
+    ```
+    Exception in thread "main" java.lang.NoClassDefFoundError: org/apache/spark/streaming/kafka/KafkaUtils$
+    	at com.zhandev.spark.project.spark.StatStreamingProjectApp$.main(StatStreamingProjectApp.scala:42)
+    	at com.zhandev.spark.project.spark.StatStreamingProjectApp.main(StatStreamingProjectApp.scala)
+    	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+    	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+    	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+    	at java.lang.reflect.Method.invoke(Method.java:498)
+    	at org.apache.spark.deploy.JavaMainApplication.start(SparkApplication.scala:52)
+    	at org.apache.spark.deploy.SparkSubmit$.org$apache$spark$deploy$SparkSubmit$$runMain(SparkSubmit.scala:879)
+    	at org.apache.spark.deploy.SparkSubmit$.doRunMain$1(SparkSubmit.scala:197)
+    	at org.apache.spark.deploy.SparkSubmit$.submit(SparkSubmit.scala:227)
+    	at org.apache.spark.deploy.SparkSubmit$.main(SparkSubmit.scala:136)
+    	at org.apache.spark.deploy.SparkSubmit.main(SparkSubmit.scala)
+    Caused by: java.lang.ClassNotFoundException: org.apache.spark.streaming.kafka.KafkaUtils$
+    	at java.net.URLClassLoader.findClass(URLClassLoader.java:381)
+    	at java.lang.ClassLoader.loadClass(ClassLoader.java:424)
+    	at java.lang.ClassLoader.loadClass(ClassLoader.java:357)
+    	... 12 more
+    ```
+
+        - Reason: lack Kafka package.
+        - Solution: add Kafka package when submitting.
+    6. Spark-submit again.
+
+    ```
+    spark-submit \
+    --class com.zhandev.spark.project.spark.StatStreamingProjectApp \
+    --master local[2] \
+    --packages org.apache.spark:spark-streaming-kafka-0-8_2.11:2.3.0 \
+    /home/hadoop/IdeaProjects/sparktrain/target/spark-train-1.0.jar \
+    10.0.2.15:9092 streaming_project_topic
+    ```
+    7. You will get such an exception.
+
+    ```
+    ERROR Executor: Exception in task 0.0 in stage 1.0 (TID 1)
+    java.lang.NoClassDefFoundError: org/apache/hadoop/hbase/client/HBaseAdmin
+        at com.zhandev.spark.project.utils.HBaseUtils.<init>(HBaseUtils.java:30)
+        at com.zhandev.spark.project.utils.HBaseUtils.getInstance(HBaseUtils.java:41)
+     	at com.zhandev.spark.project.dao.ClassTypeCourseClickCountDao$.save(ClassTypeCourseClickCountDao.scala:27)
+     	at com.zhandev.spark.project.spark.StatStreamingProjectApp$$anonfun$main$4$$anonfun$apply$1.apply(StatStreamingProjectApp.scala:92)
+     	at com.zhandev.spark.project.spark.StatStreamingProjectApp$$anonfun$main$4$$anonfun$apply$1.apply(StatStreamingProjectApp.scala:86)
+     	at org.apache.spark.rdd.RDD$$anonfun$foreachPartition$1$$anonfun$apply$29.apply(RDD.scala:929)
+     	at org.apache.spark.rdd.RDD$$anonfun$foreachPartition$1$$anonfun$apply$29.apply(RDD.scala:929)
+     	at org.apache.spark.SparkContext$$anonfun$runJob$5.apply(SparkContext.scala:2067)
+     	at org.apache.spark.SparkContext$$anonfun$runJob$5.apply(SparkContext.scala:2067)
+     	at org.apache.spark.scheduler.ResultTask.runTask(ResultTask.scala:87)
+     	at org.apache.spark.scheduler.Task.run(Task.scala:109)
+     	at org.apache.spark.executor.Executor$TaskRunner.run(Executor.scala:345)
+     	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+     	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+     	at java.lang.Thread.run(Thread.java:748)
+    Caused by: java.lang.ClassNotFoundException: org.apache.hadoop.hbase.client.HBaseAdmin
+     	at java.net.URLClassLoader.findClass(URLClassLoader.java:381)
+     	at java.lang.ClassLoader.loadClass(ClassLoader.java:424)
+     	at java.lang.ClassLoader.loadClass(ClassLoader.java:357)
+     	... 15 more
+    ```
+
+        - Reason: lack of HBase jars.
+        - Solution: add HBase jars when submitting.
+
+    8. Spark-submit again.
+
+    ```
+    spark-submit \
+    --jars $(echo /usr/local/hbase/lib/*.jar | tr ' ' ',') \
+    --class com.zhandev.spark.project.spark.StatStreamingProjectApp \
+    --master local[2] \
+    --packages org.apache.spark:spark-streaming-kafka-0-8_2.11:2.3.0 \
+    /home/hadoop/IdeaProjects/sparktrain/target/spark-train-1.0.jar \
+    10.0.2.15:9092 streaming_project_topic
+    ```
+
+### Data Visualization
+
+Create a Spring Boot web project to visualize data about page view statistics of class type courses on mooc web.
+
+**Detailed Steps:**
+
+1. Create a Spring Boot project. Add web dependency. In IDEA, File -> Settings -> Maven -> User settings file, tick "Override" checkbox, set directory as "/usr/local/maven/conf/settings.xml" (Maven installation directory).
+2. Download echarts.common.min.js and copy to "src/main/resources/static/js" folder.
+3. Add thymeleaf dependency in pom.xml.
+
+```
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-thymeleaf</artifactId>
+</dependency>
+```
+
+4. Add hbase dependency in pom.xml.
+
+```
+<dependency>
+    <groupId>org.apache.hbase</groupId>
+    <artifactId>hbase-client</artifactId>
+    <version>1.2.6</version>
+</dependency>
+```
+
+5. Create HBaseUtils.java under "src/main/java/com/zhandev/utils" folder.
+6. Create ClassTypeCourseClickCount.java under "src/main/java/com/zhandev/domain" folder.
+7. Create ClassTypeCourseClickCountDao.java under "src/main/java/com/zhandev/dao" folder.
+8. Create StatStreamingProjectApp.java under "src/main/java/com/zhandev/project" folder.
+9. Add json dependency in pom.xml, as json format data needs to be sent to the front end. 
+
+```
+<dependency>
+    <groupId>net.sf.json-lib</groupId>
+    <artifactId>json-lib</artifactId>
+    <version>2.4</version>
+    <classifier>jdk15</classifier>
+</dependency>
+```
+
+10. Create courses-page-view.html under "src/main/resources/templates" folder to display charts at front end.
+    - **Note:** check there is a "/" in <meta charset="UTF-8"/> in <head></head>. Otherwise, there will be errors. 
+11. Run MoocWebPageViewApplication.java. Visit <http://localhost:8080/moocwebpageview/courses-page-view>. You should see a pie chart of MOOC Real-time Page View Statistics. 
+    - Potential improvement: 
+	- Create a data connection pool for accessing data from HBase, which will improve the access speed. 
+	- Add a calendar widget on the front end page allowing you to access data for any date instead of hard code. Default date is today. 
+	- As it is for real-time statistics, the front end page should be refreshed automatically by adding a timer. 
+
+

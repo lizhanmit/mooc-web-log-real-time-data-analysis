@@ -34,7 +34,7 @@ public class HBaseUtils {
     }
 
     /**
-     * lazy
+     * Lazy
      */
     public static synchronized HBaseUtils getInstance() {
         if (hBaseUtilsObj == null) {
@@ -86,7 +86,10 @@ public class HBaseUtils {
         //HTable table = HBaseUtils.getInstance().getTable("mooc_course_clickcount");
         //System.out.println(table.getName().getNameAsString());
 
-        HBaseUtils.getInstance().put("mooc_course_clickcount", "20180803_123", "info", "click_count", "10");
+        //HBaseUtils.getInstance().put("mooc_course_clickcount", "20180803_123", "info", "click_count", "10");
+
+        HBaseUtils.getInstance().put("mooc_course_search_clickcount", "20180803_www.google.com_123", "info", "click_count", "10");
+
     }
 
 

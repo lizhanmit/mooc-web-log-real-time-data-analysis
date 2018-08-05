@@ -1,7 +1,7 @@
 package com.zhandev.spark.project.domain
 
 /**
-  * Web log info after data cleansing
+  * Web log info after data cleansing.
   * @param ip  access ip address of the log
   * @param time  access time of the log
   * @param courseId  access courseId of the class type course of the log

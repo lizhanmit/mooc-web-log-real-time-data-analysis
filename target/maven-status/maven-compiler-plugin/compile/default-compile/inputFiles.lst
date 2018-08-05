@@ -1,0 +1,5 @@
+/home/hadoop/IdeaProjects/sparktrain/src/main/java/com/zhandev/spark/kafka/KafkaProperties.java
+/home/hadoop/IdeaProjects/sparktrain/src/main/java/com/zhandev/spark/kafka/KafkaProducer.java
+/home/hadoop/IdeaProjects/sparktrain/src/main/java/com/zhandev/spark/kafka/KafkaConsumer.java
+/home/hadoop/IdeaProjects/sparktrain/src/main/java/com/zhandev/spark/kafka/KafkaClientApp.java
+/home/hadoop/IdeaProjects/sparktrain/src/main/java/com/zhandev/spark/project/utils/HBaseUtils.java

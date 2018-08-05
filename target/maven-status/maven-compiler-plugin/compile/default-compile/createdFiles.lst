@@ -1,0 +1,5 @@
+com/zhandev/spark/kafka/KafkaProperties.class
+com/zhandev/spark/kafka/KafkaConsumer.class
+com/zhandev/spark/kafka/KafkaClientApp.class
+com/zhandev/spark/kafka/KafkaProducer.class
+com/zhandev/spark/project/utils/HBaseUtils.class
