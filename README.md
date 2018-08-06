@@ -10,6 +10,7 @@
 - HBase: 1.2.6
 - Kafka: 0.9.0.0
 - Flume: 1.7.0
+- IDE: Intellij IDEA 2018.1.4 (Community Edition)
 
 ---
 
@@ -530,6 +531,8 @@ Web log info includes ip address, query time, url path, status code, search engi
     2. Add execution permission for log_generator.sh file. In terminal A, `chmod u+x log_generator.sh`.
     3. Check permission of log_generator.sh file. `ll`. You will see "-rwxrw-r-- 1 hadoop hadoop   91 Jul 15 14:02 log_generator.sh*".
     4. Automatically generate log info. `crontab -e`. Insert `*/1 * * * * /home/hadoop/IdeaProjects/sparktrain/src/main/resources/logGenerator/log_generator.sh`.
+        - [crontab execution time expression](https://tool.lu/crontab/)
+        - Stop automatically generating log info. `crontab -e`. Comment `*/1 * * * * /home/hadoop/IdeaProjects/sparktrain/src/main/resources/logGenerator/log_generator.sh`. Exit "crontab".
     5. Check access.log file, you will see new web log info every minute.
 
 ### Web Log ==> Flume
@@ -799,5 +802,3 @@ Create a Spring Boot web project to visualize data about page view statistics of
 Screenshot: 
 
 ![mooc-courses-page-view-statistics-pie-chart.png](src/main/resources/static/img/mooc-courses-page-view-statistics-pie-chart.png)
-
-
