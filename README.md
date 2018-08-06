@@ -5,6 +5,8 @@
 - Linux: Ubuntu 16.04
 - Spark: 2.3.0
 - Scala: 2.11.8
+- Hadoop: 2.7.1
+- HBase: 1.2.6
 - Kafka: 0.9.0.0
 - Flume: 1.7.0
 
@@ -600,12 +602,9 @@ ClickLog(72.55.187.87,20180715175101,145,200,-)
 
 ### Do Statistics about Page View (PV)
 
-#### Do statistics about page view (click count) of class type courses today up to now to figure out how many times a specific class type course has been visited today up to now. Then save statistical results into database.
+#### Page View
 
-**Steps:**
-
-1. Save statistical results into database.
-~~2. Get data from database and display statistical results according to "yyyyMMdd" and "courseId" at front end.~~
+Do statistics about page view (click count) of class type courses today up to now to figure out how many times a specific class type course has been visited today up to now. Then save statistical results into HBase.
 
 **What kind of database should we use?** (HBase)
 
@@ -661,7 +660,9 @@ That is the reason that we choose HBase as the database.
 ...
 ```
 
-#### Do statistics about page view (click count) of class type courses today up to now which is contributed by search engines. This statistical result can be used to learn effectiveness of advertisements in various search engines. Then save statistical results into database.
+#### Page View Contributed by Search Engines
+
+Do statistics about page view (click count) of class type courses today up to now which is contributed by search engines. This statistical result can be used to learn effectiveness of advertisements in various search engines. Then save statistical results into HBase.
 
 26. Create another table in HBase.
     1. In HBase shell, `create 'mooc_course_search_clickcount', 'info'`. Table name is "mooc_course_search_clickcount" and column family name is "info".
@@ -791,52 +792,12 @@ m_146                    00\x00\x00\x00\x01
 
 ### Data Visualization
 
-Create a Spring Boot web project to visualize data about page view statistics of class type courses on mooc web.
+Create a Spring Boot web project to visualize data about page view statistics of class type courses on MOOC website.
 
-**Detailed Steps:**
+[MOOC Website Page View Statistics of Courses Web Application](https://github.com/lizhanmit/mooc-web-page-view)
 
-1. Create a Spring Boot project. Add web dependency. In IDEA, File -> Settings -> Maven -> User settings file, tick "Override" checkbox, set directory as "/usr/local/maven/conf/settings.xml" (Maven installation directory).
-2. Download echarts.common.min.js and copy to "src/main/resources/static/js" folder.
-3. Add thymeleaf dependency in pom.xml.
+Screenshot: 
 
-```
-<dependency>
-    <groupId>org.springframework.boot</groupId>
-    <artifactId>spring-boot-starter-thymeleaf</artifactId>
-</dependency>
-```
-
-4. Add hbase dependency in pom.xml.
-
-```
-<dependency>
-    <groupId>org.apache.hbase</groupId>
-    <artifactId>hbase-client</artifactId>
-    <version>1.2.6</version>
-</dependency>
-```
-
-5. Create HBaseUtils.java under "src/main/java/com/zhandev/utils" folder.
-6. Create ClassTypeCourseClickCount.java under "src/main/java/com/zhandev/domain" folder.
-7. Create ClassTypeCourseClickCountDao.java under "src/main/java/com/zhandev/dao" folder.
-8. Create StatStreamingProjectApp.java under "src/main/java/com/zhandev/project" folder.
-9. Add json dependency in pom.xml, as json format data needs to be sent to the front end. 
-
-```
-<dependency>
-    <groupId>net.sf.json-lib</groupId>
-    <artifactId>json-lib</artifactId>
-    <version>2.4</version>
-    <classifier>jdk15</classifier>
-</dependency>
-```
-
-10. Create courses-page-view.html under "src/main/resources/templates" folder to display charts at front end.
-    - **Note:** check there is a "/" in <meta charset="UTF-8"/> in <head></head>. Otherwise, there will be errors. 
-11. Run MoocWebPageViewApplication.java. Visit <http://localhost:8080/moocwebpageview/courses-page-view>. You should see a pie chart of MOOC Real-time Page View Statistics. 
-    - Potential improvement: 
-	- Create a data connection pool for accessing data from HBase, which will improve the access speed. 
-	- Add a calendar widget on the front end page allowing you to access data for any date instead of hard code. Default date is today. 
-	- As it is for real-time statistics, the front end page should be refreshed automatically by adding a timer. 
+![mooc-courses-page-view-statistics-pie-chart.png](src/main/resources/static/img/mooc-courses-page-view-statistics-pie-chart.png)
 
 
