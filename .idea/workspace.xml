@@ -22,7 +22,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="StatStreamingProjectApp.scala" pinned="false" current-in-tab="true">
+      <file leaf-file-name="StatStreamingProjectApp.scala" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/scala/com/zhandev/spark/project/spark/StatStreamingProjectApp.scala">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="68">
@@ -34,11 +34,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="README.md" pinned="false" current-in-tab="false">
+      <file leaf-file-name="README.md" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/README.md">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="77">
-              <caret line="817" selection-start-line="817" selection-end-line="817" />
+            <state relative-caret-position="321">
+              <caret line="506" column="86" selection-start-line="506" selection-start-column="86" selection-end-line="506" selection-end-column="86" />
             </state>
           </provider>
         </entry>
@@ -344,9 +344,9 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
       <pane id="AndroidView" />
       <pane id="PackagesPane" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -881,16 +881,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="133">
           <caret line="81" column="7" selection-start-line="81" selection-start-column="7" selection-end-line="81" selection-end-column="7" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/README.md">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="77">
-          <caret line="817" selection-start-line="817" selection-end-line="817" />
         </state>
       </provider>
     </entry>
@@ -901,6 +891,13 @@
           <folding>
             <element signature="e#41#85#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/README.md">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="321">
+          <caret line="506" column="86" selection-start-line="506" selection-start-column="86" selection-end-line="506" selection-end-column="86" />
         </state>
       </provider>
     </entry>
@@ -921,7 +918,7 @@
       </state>
       <state key="FacetStructureConfigurable.UI">
         <settings>
-          <last-edited>No facets are configured</last-edited>
+          <last-edited>Python</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>

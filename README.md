@@ -3,6 +3,7 @@
 **Version:**
 
 - Linux: Ubuntu 16.04
+- Java: 1.8.0_171
 - Spark: 2.3.0
 - Scala: 2.11.8
 - Hadoop: 2.7.1
@@ -498,12 +499,12 @@ Firstly, test functionality in local mode. Then test in server mode (in producti
 
 **Steps:**
 
-1. Create web log generator by using ​Python​​.
+1. Create a web log generator by using ​Python​​.
 2. Collect web log from the generator by using Flume.
 3. Send web log from Flume to Kafka.
 4. Send web log from Kafka to Spark Streaming and do data cleansing.
 5. Save data into HBase.
-6.
+6. Create a Spring Boot web application as the user interface for data visualization.
 
 
 ### Web Log Generator
@@ -714,6 +715,8 @@ m_146                    00\x00\x00\x00\x01
     ```
 
     5. You will get such an exception.
+        - Reason: lack Kafka package.
+        - Solution: add Kafka package when submitting.
 
     ```
     Exception in thread "main" java.lang.NoClassDefFoundError: org/apache/spark/streaming/kafka/KafkaUtils$
@@ -736,8 +739,6 @@ m_146                    00\x00\x00\x00\x01
     	... 12 more
     ```
 
-        - Reason: lack Kafka package.
-        - Solution: add Kafka package when submitting.
     6. Spark-submit again.
 
     ```
@@ -749,6 +750,8 @@ m_146                    00\x00\x00\x00\x01
     10.0.2.15:9092 streaming_project_topic
     ```
     7. You will get such an exception.
+        - Reason: lack of HBase jars.
+        - Solution: add HBase jars when submitting.
 
     ```
     ERROR Executor: Exception in task 0.0 in stage 1.0 (TID 1)
@@ -774,9 +777,6 @@ m_146                    00\x00\x00\x00\x01
      	at java.lang.ClassLoader.loadClass(ClassLoader.java:357)
      	... 15 more
     ```
-
-        - Reason: lack of HBase jars.
-        - Solution: add HBase jars when submitting.
 
     8. Spark-submit again.
 
