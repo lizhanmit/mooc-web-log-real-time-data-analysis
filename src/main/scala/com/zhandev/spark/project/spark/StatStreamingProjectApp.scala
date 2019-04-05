@@ -95,7 +95,7 @@ object StatStreamingProjectApp {
 
 
     /**
-      * Save data into HBase.
+      * Save data into HBase. (search engine)
       * The data is about page view (click count) of class type courses today up to now which is contributed by search engines.
       */
     cleanData.map(x => {

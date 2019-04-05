@@ -12,7 +12,7 @@ object NetworkWordCount {
 
   def main(args: Array[String]): Unit = {
 
-    // do not use "local" or "local[1]", as the receiver has already take up one thread
+    // do not use "local" or "local[1]", as the receiver has already taken up one thread
     val sparkConf = new SparkConf().setMaster("local[2]").setAppName("NetworkWordCount")
 
     val ssc = new StreamingContext(sparkConf, Seconds(5))
