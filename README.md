@@ -1,6 +1,31 @@
 # Spark Streaming Real Project Tutorial
 
-**Version:**
+## MOOC Web Log Data Real-Time Analysis
+
+This project is about analyzing online courses web log data in real time by taking advantage of Spark Streaming, Kafka, Flume and HBase technologies and providing data visualization using Spring Boot web application and ECharts framework. Through the web user interface, you can see the statistical information about page view of courses and page view contributed by search engines so far today in real time. The result can be used for organization’s decision making, such as which course is popular, which course should be advertised more, which course could provide some discounts to customers, and how to utilize search engines more effectively.
+
+Steps:
+
+1. Wrote a Python script as a log generator to write log data in a log file and utilized Unix "crontab" command to make sure 100 lines of log can be generated per minute. And the log info includes ip address, query time, url path, status code, search engine referred http address, and search keyword.
+2. Wrote a Flume config file to collect log data from the log file. The source is exec, channel is memory, and sink is Kafka.
+3. Created a Kafka topic and integrated with Flume.
+4. Created Spark Streaming application and got streaming data from Kafka using KafkaUtils.createDirectStream and processed the data per minute.
+5. After getting the log data, I did data cleansing and filtered out unrelated data. Specifically,
+    1. Extracted ip address, query time, courseId, statusCode and referred http address from the raw data.
+    2. Formatted query time to date. Filtered out data with invalid courseId.
+    3. Converted data to key value pairs. The key is "day_courseId", which is also the rowkey of the table in HBase, in order to count the page view of each course so far today.
+    4. Did map reduce for the key value pairs, and then added them to a list.
+    5. Saved the list into HBase, namely, saving data in batch rather than one by one.
+    6. At this point, I got real-time data of page view of courses for a specific day.
+6. Of course, before saving into HBase, I had to create a database and a table in it. Basically, only rowkey and click count were in the table.
+7. After these, I did similar thing to page view of courses that was contributed by search engines.
+    1. Created another HBase table. Here, the rowkey is "day_serachEngine_courseId".
+    2. Then I got the data in HBase, which can be used to learn effectiveness of advertisements in various search engines.
+8. After getting all the data I needed, finally, I built a simple Spring Boot web app to get the data from HBase and used ECharts framework to do data visualization. Through the pie chart, you can see the number of page view of each course and its corresponding proportion of the total.
+
+---
+
+## Version
 
 - Linux: Ubuntu 16.04
 - Java: 1.8.0_171
@@ -406,6 +431,7 @@ Exception in thread "main" java.lang.ClassCastException: kafka.cluster.BrokerEnd
 **Steps:** (use Kafka terminal in local mode, do not duplicate here)
 
 Step 1, 2, 3, 4, 5 are the same as in local mode.
+
 6. In terminal C, pack the spark project using maven, under the spark project directory, `mvn clean package -DskipTests` (skip test). Then the .jar file will be created under "target" folder.
 7. Run the .jar file using spark-submit. (Need network to download packages, but in production environment, network will not be available. So you should use `--jars` instead of `--packages`.)
 
@@ -510,7 +536,7 @@ Firstly, test functionality in local mode. Then test in server mode (in producti
 
 ### Web Log Generator
 
-Web log info includes ip address, query time, url path, status code, search engine refered http address, and search keyword.
+Web log info includes ip address, query time, url path, status code, search engine referred http address, and search keyword.
 
 **Detailed steps:**
 
@@ -576,7 +602,7 @@ flume-ng agent \
 **Detailed steps:**
 
 13. In IDEA, create and run StatStreamingProjectApp.scala (without "data cleansing" code). Edit configurations -> Program arguments, input `10.0.2.15:9092 streaming_project_topic`. -> Apply
-14. In IDEA console, you will see `100` every minute.
+14. In IDEA console, you will see `100` every minute. (`100` is the count result of number of lines of log data.)
 
 ### Web Log ==> Flume ==> Kafka ==> Spark Streaming ==> Data Cleansing
 
@@ -700,7 +726,7 @@ m_146                    00\x00\x00\x00\x01
     2. In terminal, pack the spark project using maven, under the spark project directory, `mvn clean package -DskipTests` (skip test). Then the .jar file will be created under "target" folder.
     3. You will get such an error. "error: object HBaseUtils is not a member of package com.zhandev.spark.project.utils".
         - Reason: HBaseUtils.java is not in the compile scope.
-        - Solution: In pom.xml, comment the below in <build></build>.
+        - Solution: In pom.xml, comment the below in `<build></build>`.
 
         ```
         <sourceDirectory>src/main/scala</sourceDirectory>
