@@ -1,6 +1,4 @@
-# Spark Streaming Real Project Tutorial
-
-## MOOC Web Log Data Real-Time Analysis
+# MOOC Web Log Real-Time Data Analysis
 
 This project is about analyzing online courses web log data in real time by taking advantage of Spark Streaming, Kafka, Flume and HBase technologies and providing data visualization using Spring Boot web application and ECharts framework. Through the web user interface, you can see the statistical information about page view of courses and page view contributed by search engines so far today in real time. The result can be used for organization’s decision making, such as which course is popular, which course should be advertised more, which course could provide some discounts to customers, and how to utilize search engines more effectively.
 
@@ -23,9 +21,39 @@ Steps:
     2. Then I got the data in HBase, which can be used to learn effectiveness of advertisements in various search engines.
 8. After getting all the data I needed, finally, I built a simple Spring Boot web app to get the data from HBase and used ECharts framework to do data visualization. Through the pie chart, you can see the number of page view of each course and its corresponding proportion of the total.
 
+- [MOOC Web Log Real-Time Data Analysis](#mooc-web-log-real-time-data-analysis)
+  - [Development Environment](#development-environment)
+  - [src/main/java/com/zhandev/spark/kafka](#srcmainjavacomzhandevsparkkafka)
+  - [src/main/scala/com/zhandev/spark](#srcmainscalacomzhandevspark)
+    - [NetworkWordCount.scala](#networkwordcountscala)
+    - [FileWordCount.scala](#filewordcountscala)
+    - [StatefulWordCount.scala](#statefulwordcountscala)
+    - [WordCountResultToMysql.scala](#wordcountresulttomysqlscala)
+    - [BlacklistFiltering.scala](#blacklistfilteringscala)
+    - [SparkSqlNetworkWordCount.scala](#sparksqlnetworkwordcountscala)
+    - [FlumePushWordCount.scala](#flumepushwordcountscala)
+      - [local mode](#local-mode)
+      - [server mode (in production environment)](#server-mode-in-production-environment)
+    - [FlumePullWordCount.scala](#flumepullwordcountscala)
+      - [server mode (in production environment)](#server-mode-in-production-environment-1)
+    - [KafkaDirectWordCount.scala](#kafkadirectwordcountscala)
+      - [local mode](#local-mode-1)
+      - [server mode (in production environment)](#server-mode-in-production-environment-2)
+  - [Web Log Streaming Workflow](#web-log-streaming-workflow)
+  - [Spark Streaming Real Project](#spark-streaming-real-project)
+    - [Web Log Generator](#web-log-generator)
+    - [Web Log ==\> Flume](#web-log--flume)
+    - [Web Log ==\> Flume ==\> Kafka](#web-log--flume--kafka)
+    - [Web Log ==\> Flume ==\> Kafka ==\> Spark Streaming](#web-log--flume--kafka--spark-streaming)
+    - [Web Log ==\> Flume ==\> Kafka ==\> Spark Streaming ==\> Data Cleansing](#web-log--flume--kafka--spark-streaming--data-cleansing)
+    - [Do Statistics about Page View (PV)](#do-statistics-about-page-view-pv)
+      - [Page View](#page-view)
+      - [Page View Contributed by Search Engines](#page-view-contributed-by-search-engines)
+    - [Data Visualization](#data-visualization)
+
 ---
 
-## Version
+## Development Environment
 
 - Linux: Ubuntu 16.04
 - Java: 1.8.0_171
